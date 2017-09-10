@@ -1,0 +1,11 @@
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\TropicalBears.Test.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\TropicalBears.Test.pdb
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\Iesi.Collections.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\NHibernate.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\nunit.framework.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\Iesi.Collections.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\NHibernate.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\bin\Debug\nunit.framework.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\obj\Debug\TropicalBears.Test.csprojResolveAssemblyReference.cache
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\obj\Debug\TropicalBears.Test.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Test\obj\Debug\TropicalBears.Test.pdb

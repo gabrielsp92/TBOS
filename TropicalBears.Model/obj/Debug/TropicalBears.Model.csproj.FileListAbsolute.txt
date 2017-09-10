@@ -1,0 +1,17 @@
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\obj\Debug\TropicalBears.Model.csprojResolveAssemblyReference.cache
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\TropicalBears.Model.dll.config
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\TropicalBears.Model.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\TropicalBears.Model.pdb
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\EntityFramework.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\Iesi.Collections.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\MySql.Data.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\mysql.data.entity.EF6.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\MySql.Web.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\NHibernate.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\EntityFramework.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\Iesi.Collections.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\NHibernate.xml
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\obj\Debug\TropicalBears.Model.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\obj\Debug\TropicalBears.Model.pdb
