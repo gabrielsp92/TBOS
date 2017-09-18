@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DD251C7E-2302-43C6-9FA5-1754432CA1A1}</ProjectGuid>
+    <ProjectGuid>{39512485-90D0-429B-A1D2-E6B5472824FF}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -205,6 +206,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="security\PermissionFilter.cs" />
+    <Compile Include="security\PermissionProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +234,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -265,9 +270,23 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Denied.cshtml" />
+    <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\Lockout.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\Error.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\_LoginPartial.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\_Layout.cshtml" />
+    <Content Include="Views\Admin\AddProduto.cshtml" />
+    <Content Include="Views\Admin\DetailsProduto.cshtml" />
+    <Content Include="Views\Admin\EditProduto.cshtml" />
+    <Content Include="Views\Admin\ImagemProduto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -279,7 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TropicalBears.Model\TropicalBears.Model.csproj">
-      <Project>{E83D13BE-216E-459C-9E2F-5FC6BB9BC656}</Project>
+      <Project>{e83d13be-216e-459c-9e2f-5fc6bb9bc656}</Project>
       <Name>TropicalBears.Model</Name>
     </ProjectReference>
   </ItemGroup>
@@ -299,7 +318,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49921</DevelopmentServerPort>
+          <DevelopmentServerPort>61007</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:49921/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

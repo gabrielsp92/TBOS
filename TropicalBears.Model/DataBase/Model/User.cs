@@ -21,12 +21,26 @@ namespace TropicalBears.Model.DataBase.Model
         {
             return string.Format("{0},{1}", Nome, Sobrenome);
         }
+        public virtual Boolean isAdmin()
+        {
+            if (Roles != null)
+            {
+                foreach(var role in Roles)
+                {
+                    if (role.Nome == "Administrador")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
     public class UserMap : ClassMapping<User>
     {
         public UserMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
             Property(x => x.Senha, m => {
                 m.NotNullable(true);
                 m.Unique(true);
@@ -43,6 +57,7 @@ namespace TropicalBears.Model.DataBase.Model
                 collectionMapping.Table("user_role");
                 collectionMapping.Cascade(Cascade.None);
                 collectionMapping.Key(k => k.Column("user_id"));
+                collectionMapping.Lazy(CollectionLazy.NoLazy);
             }
             , map => map.ManyToMany(p => p.Column("role_id")));
         }

@@ -82,6 +82,8 @@
     <Compile Include="DataBase\Model\Tipo.cs" />
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="DataBase\Model\Venda.cs" />
+    <Compile Include="DataBase\Repository\CategoriaRepository.cs" />
+    <Compile Include="DataBase\Repository\ImagemRepository.cs" />
     <Compile Include="DataBase\Repository\ProdutoRepository.cs" />
     <Compile Include="DataBase\Repository\RepositoryBase.cs" />
     <Compile Include="DataBase\Repository\UserRepository.cs" />

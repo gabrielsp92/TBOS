@@ -1,0 +1,76 @@
+﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Produto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Área do Administrador - Senha Atual : @ViewBag.NovaSenha</h2>
+
+<p>
+    @Html.ActionLink("Adicionar Produto", "AddProduto","Admin")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Preco)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Promocao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecoPromocao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estoque)
+        </th>
+        <th>
+            Data de Criação
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedAt)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Preco)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Promocao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecoPromocao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estoque)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedAt)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "EditProduto", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "DetailsProduto", new { id=item.Id }) |
+            @Html.ActionLink("Excluir", "DeleteProduto", new { id=item.Id }) |
+            @Html.ActionLink("Imagens", "ImagemProduto", new { id=item.Id})
+        </td>
+    </tr>
+}
+
+</table>

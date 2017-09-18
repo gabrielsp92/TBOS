@@ -19,7 +19,7 @@ namespace TropicalBears.Model.DataBase.Model
     {
         public CarrinhoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
             Property(x => x.Status);
 
             ManyToOne(x => x.Usuario, m =>

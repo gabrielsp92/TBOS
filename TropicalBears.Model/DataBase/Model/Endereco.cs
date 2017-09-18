@@ -23,7 +23,7 @@ namespace TropicalBears.Model.DataBase.Model
     {
         public EnderecoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
 
             ManyToOne(x => x.Usuario, m => {
                 m.Cascade(Cascade.All);

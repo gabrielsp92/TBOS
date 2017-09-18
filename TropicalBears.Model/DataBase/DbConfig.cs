@@ -25,14 +25,17 @@ namespace TropicalBears.Model.DataBase
         //public PessoaRepository PessoaRepository { get; set; }
         public ProdutoRepository ProdutoRepository { get; set; }
         public UserRepository UserRepository { get; set; }
+        public CategoriaRepository CategoriaRepository { get; set; }
+        public ImagemRepository ImagemRepository { get; set; }
 
         private DbConfig()
         {
             Conectar();
             this.ProdutoRepository = new ProdutoRepository(Session);
             this.UserRepository = new UserRepository(Session);
-          //  this.PessoaRepository = new PessoaRepository(Session);
-          //  this.TelefoneRepository = new TelefoneRepository(Session);
+            this.CategoriaRepository = new CategoriaRepository(Session);
+            this.ImagemRepository = new ImagemRepository(Session);
+          
         }
 
         public static DbConfig Instance

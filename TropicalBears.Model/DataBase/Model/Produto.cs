@@ -24,14 +24,16 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual int Estoque { get; set; }
         public virtual DateTime CreatedAt { get; set; }
         public virtual DateTime UpdatedAt { get; set; }
+
         //Public virtual Imagem ImagemPrincipal{get;set;}
-        //public IList<Imagem> Imagens { get; set; }
+        public virtual IList<Imagem> Imagens { get; set; }
+
     }
     public class ProdutoMap : ClassMapping<Produto>
     {
         public ProdutoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
 
             ManyToOne(x => x.Categoria,m => {
                 m.Cascade(Cascade.All);
@@ -62,6 +64,15 @@ namespace TropicalBears.Model.DataBase.Model
             Property(x => x.Estoque);
             Property(x => x.CreatedAt);
             Property(x => x.UpdatedAt);
+
+            Bag<Imagem>(x => x.Imagens, m =>
+            {
+                m.Cascade(Cascade.All);
+                m.Key(k => k.Column("produto_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
         }
 
     }

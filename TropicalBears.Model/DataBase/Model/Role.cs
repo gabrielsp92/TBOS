@@ -17,7 +17,7 @@ namespace TropicalBears.Model.DataBase.Model
     {
         public RoleMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
             Property(x => x.Nome);
         }
         

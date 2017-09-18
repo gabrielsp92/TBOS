@@ -23,7 +23,7 @@ namespace TropicalBears.Model.DataBase.Model
     {
         public VendaMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.GuidComb));
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
 
             OneToOne(x => x.Carrinho, m => {
                 m.Constrained(true);

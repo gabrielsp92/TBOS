@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +10,24 @@ namespace TropicalBears.Model.DataBase.Model
 {
     public class Imagem
     {
-        public int Id { get; set; }
-        public string Img { get; set; }
-        public Produto Produto { get; set; }
-        public DateTime TimeStamps { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string Img { get; set; }
+        public virtual Produto Produto { get; set; }
 
+    }
+    public class ImagemMap : ClassMapping<Imagem>
+    {
+        public ImagemMap()
+        {
+            Id(x => x.Id, m => m.Generator(Generators.Identity));
+            Property(x => x.Img, m=>m.NotNullable(true));
+
+            ManyToOne(x => x.Produto, m => {
+                m.Cascade(Cascade.All);
+                m.Column("produto_id");
+                m.Class(typeof(Produto));
+                m.Lazy(LazyRelation.NoLazy);
+            });
+        }
     }
 }

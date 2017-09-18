@@ -18,9 +18,13 @@ namespace TropicalBears.API.Controllers
             this.produtos = DbConfig.Instance.ProdutoRepository.FindAll();
         }
         // GET: api/Produto
-        public IList<Produto> Get()
+        public IHttpActionResult Get()
         {
-            return this.produtos;
+            if (this.produtos == null)
+            {
+                return NotFound();
+            }
+            return Ok(this.produtos);
            // return new string[] { "value1", "value2" };
         }
 
@@ -30,6 +34,7 @@ namespace TropicalBears.API.Controllers
             var prods = this.produtos;
             return prods.SingleOrDefault(x => x.Id == id);
         }
+
         [Route("api/Produto/{categoria}")]
         [HttpGet]
         public IEnumerable<Produto> GetByCategoria(string categoria)
