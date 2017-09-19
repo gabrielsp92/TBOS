@@ -104,5 +104,38 @@ namespace TropicalBears.App.Controllers
             DbConfig.Instance.UserRepository.Authenticate(usr.Email, usr.Senha);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Camisas()
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x=>x.Categoria.Nome == "Camisas");
+            return View(prods);
+        }
+        public ActionResult Acessorios()
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessórios");
+            return View(prods);
+        }
+        [HttpPost]
+        public ActionResult Buscar(FormCollection form)
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+            return View("Index", prods);
+        }
+        [HttpPost]
+        public ActionResult BuscarCamisas(FormCollection form)
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Camisas")
+                            .Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+          
+            return View("Camisas", prods);
+        }
+        [HttpPost]
+        public ActionResult BuscarAcessorios(FormCollection form)
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessórios")
+                .Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+            
+            return View("Acessorios", prods);
+        }
     }
 }

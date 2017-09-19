@@ -213,6 +213,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css1.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -278,11 +279,14 @@
     <Content Include="Views\Admin\AdminLayout\Lockout.cshtml" />
     <Content Include="Views\Admin\AdminLayout\Error.cshtml" />
     <Content Include="Views\Admin\AdminLayout\_LoginPartial.cshtml" />
-    <Content Include="Views\Admin\AdminLayout\_Layout.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\_Layout.def.cshtml" />
     <Content Include="Views\Admin\AddProduto.cshtml" />
     <Content Include="Views\Admin\DetailsProduto.cshtml" />
     <Content Include="Views\Admin\EditProduto.cshtml" />
     <Content Include="Views\Admin\ImagemProduto.cshtml" />
+    <Content Include="Views\Admin\AdminLayout\_Layout.cshtml" />
+    <Content Include="Views\Home\Camisas.cshtml" />
+    <Content Include="Views\Home\Acessorios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

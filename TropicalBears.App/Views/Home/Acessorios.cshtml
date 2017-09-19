@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Produto>
+
+@{
+    ViewBag.Title = "Acessorios";
+}
+<hr />
+<div class="row">
+    @using (Html.BeginForm("BuscarAcessorios", "Home", FormMethod.Post))
+    {
+        <div class="col-lg-3">
+            <input type="text" class="form-control" style="width:100%" name="busca" />
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" value="BUSCAR" class="form-control btn-block" />
+        </div>
+
+
+
+    }
+
+</div>
+
+<hr />
+<div class="row"></div>
+<div class="row ">
+
+    @foreach (var item in Model)
+    {
+
+        if (item.Imagens != null && item.Imagens.Count > 0)
+        {
+
+            <div class="col-lg-3">
+                <a href="Detais/@item.Id">
+                    <img src="~/Upload/@item.Imagens.First().Img" class="img-responsive" />
+                </a>
+
+                <h4>@item.Nome</h4>
+                <h4>R$@item.Preco</h4>
+                <p>@item.Descricao</p>
+            </div>
+
+        }
+
+    }
+
+</div>
