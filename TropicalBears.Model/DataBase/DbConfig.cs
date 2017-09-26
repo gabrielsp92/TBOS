@@ -27,6 +27,9 @@ namespace TropicalBears.Model.DataBase
         public UserRepository UserRepository { get; set; }
         public CategoriaRepository CategoriaRepository { get; set; }
         public ImagemRepository ImagemRepository { get; set; }
+        public ComentarioRepository ComentarioRepository { get; set; }
+        public PesquisaRepository PesquisaRepository { get; set; }
+        public EnderecoRepository EnderecoRepository { get; set; }
 
         private DbConfig()
         {
@@ -35,7 +38,10 @@ namespace TropicalBears.Model.DataBase
             this.UserRepository = new UserRepository(Session);
             this.CategoriaRepository = new CategoriaRepository(Session);
             this.ImagemRepository = new ImagemRepository(Session);
-          
+            this.ComentarioRepository = new ComentarioRepository(Session);
+            this.PesquisaRepository = new PesquisaRepository(Session);
+            this.EnderecoRepository = new EnderecoRepository(Session);
+
         }
 
         public static DbConfig Instance

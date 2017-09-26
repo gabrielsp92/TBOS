@@ -16,6 +16,9 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual string Nome { get; set; }
         public virtual string Sobrenome { get; set; }
         public virtual IList<Role> Roles { get; set; }
+        public virtual IList<Endereco> Enderecos { get; set; }
+        public virtual IList<Comentario> Comentarios { get; set; }
+        public virtual IList<Pesquisa> Pesquisas { get; set; }
 
         public virtual string GetNomeCompleto()
         {
@@ -60,6 +63,32 @@ namespace TropicalBears.Model.DataBase.Model
                 collectionMapping.Lazy(CollectionLazy.NoLazy);
             }
             , map => map.ManyToMany(p => p.Column("role_id")));
+
+            Bag<Comentario>(x => x.Comentarios, m =>
+            {
+                m.Cascade(Cascade.All);
+                m.Key(k => k.Column("user_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
+
+            Bag<Pesquisa>(x => x.Pesquisas, m =>
+            {
+                m.Cascade(Cascade.None);
+                m.Key(k => k.Column("user_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
+            Bag<Endereco>(x => x.Enderecos, m =>
+            {
+                m.Cascade(Cascade.None);
+                m.Key(k => k.Column("user_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
         }
         
     }

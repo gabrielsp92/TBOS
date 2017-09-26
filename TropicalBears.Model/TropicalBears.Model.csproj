@@ -73,9 +73,11 @@
     <Compile Include="DataBase\DbConfig.cs" />
     <Compile Include="DataBase\Model\Carrinho.cs" />
     <Compile Include="DataBase\Model\Categoria.cs" />
+    <Compile Include="DataBase\Model\Comentario.cs" />
     <Compile Include="DataBase\Model\Endereco.cs" />
     <Compile Include="DataBase\Model\FormaPagamento.cs" />
     <Compile Include="DataBase\Model\Imagem.cs" />
+    <Compile Include="DataBase\Model\Pesquisa.cs" />
     <Compile Include="DataBase\Model\Produto.cs" />
     <Compile Include="DataBase\Model\Role.cs" />
     <Compile Include="DataBase\Model\Subcategoria.cs" />
@@ -83,7 +85,10 @@
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="DataBase\Model\Venda.cs" />
     <Compile Include="DataBase\Repository\CategoriaRepository.cs" />
+    <Compile Include="DataBase\Repository\ComentarioRepository.cs" />
+    <Compile Include="DataBase\Repository\EnderecoRepository.cs" />
     <Compile Include="DataBase\Repository\ImagemRepository.cs" />
+    <Compile Include="DataBase\Repository\PesquisaRepository.cs" />
     <Compile Include="DataBase\Repository\ProdutoRepository.cs" />
     <Compile Include="DataBase\Repository\RepositoryBase.cs" />
     <Compile Include="DataBase\Repository\UserRepository.cs" />

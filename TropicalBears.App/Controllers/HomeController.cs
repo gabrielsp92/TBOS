@@ -118,24 +118,190 @@ namespace TropicalBears.App.Controllers
         [HttpPost]
         public ActionResult Buscar(FormCollection form)
         {
+            double precoMin;
+            double precoMax;
+
+            var min = form["min"];
+            var max = form["max"];
+            if (form["min"] != "")
+            {
+                precoMin = Convert.ToDouble(form["min"]);
+            }else
+            {
+                precoMin = 0;
+            }
+            if (form["max"] != "")
+            {
+                precoMax = Convert.ToDouble(form["max"]);
+            }
+            else
+            {
+                precoMax = 0;
+            }
+
+            string nome = form["busca"].ToString();
+
+            Pesquisa pesq = new Pesquisa()
+            {
+                Nome = nome,
+                PrecoMaximo = precoMax,
+                PrecoMinimo = precoMin,
+                Data = DateTime.Now,
+                Categoria = "Todos"
+            };
+            var usr = DbConfig.Instance.UserRepository.isAuthenticated();
+            if (usr != null)
+            {
+                pesq.Usuario = usr;
+            }
+            DbConfig.Instance.PesquisaRepository.Salvar(pesq);
             var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+
+            if (precoMax > 0)
+            {
+                 prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+            }
+            
             return View("Index", prods);
         }
+
         [HttpPost]
         public ActionResult BuscarCamisas(FormCollection form)
         {
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Camisas")
-                            .Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
-          
+
+            double precoMin;
+            double precoMax;
+
+            var min = form["min"];
+            var max = form["max"];
+            if (form["min"] != "")
+            {
+                precoMin = Convert.ToDouble(form["min"]);
+            }
+            else
+            {
+                precoMin = 0;
+            }
+            if (form["max"] != "")
+            {
+                precoMax = Convert.ToDouble(form["max"]);
+            }
+            else
+            {
+                precoMax = 0;
+            }
+
+            string nome = form["busca"].ToString();
+
+            Pesquisa pesq = new Pesquisa()
+            {
+                Nome = nome,
+                PrecoMaximo = precoMax,
+                PrecoMinimo = precoMin,
+                Data = DateTime.Now,
+                Categoria = "Camisas"
+            };
+            var usr = DbConfig.Instance.UserRepository.isAuthenticated();
+            if (usr != null)
+            {
+                pesq.Usuario = usr;
+            }
+            DbConfig.Instance.PesquisaRepository.Salvar(pesq);
+
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x=> x.Categoria.Nome == "Camisas");
+            prods = prods.Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+
+            if (precoMax > 0)
+            {
+                prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+            }
+
             return View("Camisas", prods);
         }
         [HttpPost]
         public ActionResult BuscarAcessorios(FormCollection form)
         {
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessórios")
-                .Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
-            
+            double precoMin;
+            double precoMax;
+
+            var min = form["min"];
+            var max = form["max"];
+            if (form["min"] != "")
+            {
+                precoMin = Convert.ToDouble(form["min"]);
+            }
+            else
+            {
+                precoMin = 0;
+            }
+            if (form["max"] != "")
+            {
+                precoMax = Convert.ToDouble(form["max"]);
+            }
+            else
+            {
+                precoMax = 0;
+            }
+
+            string nome = form["busca"].ToString();
+
+            Pesquisa pesq = new Pesquisa()
+            {
+                Nome = nome,
+                PrecoMaximo = precoMax,
+                PrecoMinimo = precoMin,
+                Data = DateTime.Now,
+                Categoria = "Acessorios"
+            };
+            var usr = DbConfig.Instance.UserRepository.isAuthenticated();
+            if (usr != null)
+            {
+                pesq.Usuario = usr;
+            }
+            DbConfig.Instance.PesquisaRepository.Salvar(pesq);
+
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessorios");
+            prods = prods.Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+
+            if (precoMax > 0)
+            {
+                prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+            }
+
             return View("Acessorios", prods);
+        }
+        public ActionResult Details(int id)
+        {
+            Produto p = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(p);
+        }
+
+        //Auth Needed
+        public ActionResult SaveComment(FormCollection form)
+        {
+            if (this.CheckLogIn())
+            {
+                Comentario com = new Comentario();
+                com.Avaliacao = form["Avaliacao"].ToString();
+                com.Texto = form["texto"].ToString();
+                com.Produto = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["produtoID"])).FirstOrDefault();
+                com.Usuario = DbConfig.Instance.UserRepository.isAuthenticated();
+                DbConfig.Instance.ComentarioRepository.Salvar(com);
+
+                return View("Details",com.Produto);
+            }
+            return RedirectToAction("Denied");
+
+        }
+
+        public Boolean CheckLogIn()
+        {
+            var usr = DbConfig.Instance.UserRepository.isAuthenticated();
+            if (usr != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

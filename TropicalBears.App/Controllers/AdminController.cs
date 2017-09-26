@@ -114,23 +114,25 @@ namespace TropicalBears.App.Controllers
                 return RedirectToAction("Denied", "Home");
 
             var p = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["produtoID"])).FirstOrDefault();
-
-            var fileName = "foto" + p.Id + "_" + DateTime.Now.ToString("yyyyMMdd") + "_" + DateTime.Now.ToString("HHmmss") + "_" + Path.GetExtension(img.FileName);
-
-            var path = HttpContext.Server.MapPath("~/Upload/");
-
-            var file = Path.Combine(path, fileName);
-
-            img.SaveAs(file);
-
-            if (System.IO.File.Exists(file))
+            if (img != null)
             {
-                var image = new Imagem
+                var fileName = "foto" + p.Id + "_" + DateTime.Now.ToString("yyyyMMdd") + "_" + DateTime.Now.ToString("HHmmss") + "_" + Path.GetExtension(img.FileName);
+
+                var path = HttpContext.Server.MapPath("~/Upload/");
+
+                var file = Path.Combine(path, fileName);
+
+                img.SaveAs(file);
+
+                if (System.IO.File.Exists(file))
                 {
-                    Produto = p,
-                    Img = fileName      
-                };
-                DbConfig.Instance.ImagemRepository.Salvar(image);
+                    var image = new Imagem
+                    {
+                        Produto = p,
+                        Img = fileName
+                    };
+                    DbConfig.Instance.ImagemRepository.Salvar(image);
+                }
             }
 
             return RedirectToAction("ImagemProduto",p);

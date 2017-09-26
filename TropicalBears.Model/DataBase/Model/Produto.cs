@@ -25,8 +25,38 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual DateTime CreatedAt { get; set; }
         public virtual DateTime UpdatedAt { get; set; }
 
-        //Public virtual Imagem ImagemPrincipal{get;set;}
+        //comments
+        public virtual IList<Comentario> Comentarios { get; set; }
+
+        //images
         public virtual IList<Imagem> Imagens { get; set; }
+
+
+        public virtual double MediaAvaliacao()
+        {
+            int coment = 0;
+            if(Comentarios != null && Comentarios.Count > 0)
+            {
+                foreach (var item in Comentarios)
+                {
+                    if (item.Avaliacao == "Bom")
+                    {
+                        coment++;
+                    }
+                }
+
+                double onepct = Convert.ToDouble(this.Comentarios.Count()) / 100;
+
+                return 100 - ((Comentarios.Count() - coment) / onepct);
+
+            }
+            return 100;
+        }
+
+        public virtual double MediaAvaliacaoNegativa()
+        {
+            return 100 - this.MediaAvaliacao();
+        }
 
     }
     public class ProdutoMap : ClassMapping<Produto>
@@ -73,6 +103,16 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Inverse(true);
             },
             r => r.OneToMany());
+
+            Bag<Comentario>(x => x.Comentarios, m =>
+            {
+                m.Cascade(Cascade.All);
+                m.Key(k => k.Column("produto_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
+            
         }
 
     }
