@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -276,6 +277,76 @@ namespace TropicalBears.App.Controllers
             return View(p);
         }
 
+        //CART METHOD
+        public ActionResult Carrinho()
+        {
+            Carrinho car = new Carrinho();
+
+            if (HttpContext.Session["cartID"] != null && HttpContext.Session["cartID"].ToString() != "" )
+            {
+                var idCart = Convert.ToInt32(HttpContext.Session["cartID"].ToString());
+                car = DbConfig.Instance.CarrinhoRepository.FindAll().Where(x => x.Id == idCart).FirstOrDefault();
+            }
+            else
+            {
+                car = DbConfig.Instance.CarrinhoRepository.Salvar(car);
+                HttpContext.Session["cartID"] = car.Id;
+            }
+
+
+            car.CarrinhoProduto = DbConfig.Instance.CarrinhoProdutoRepository.FindAll().Where(x => x.Carrinho.Id == car.Id).ToList();
+
+            return View(car);
+
+        }
+        public ActionResult AddToCart(FormCollection form)
+        {
+            var produtoID = Convert.ToInt32(form["produtoID"].ToString());
+            Carrinho car = new Carrinho();
+
+            //Check if cart exists
+            if (HttpContext.Session["cartID"] != null && HttpContext.Session["cartID"].ToString() != "")
+            {
+                var idCart = Convert.ToInt32(HttpContext.Session["cartID"].ToString());
+                car = DbConfig.Instance.CarrinhoRepository.FindAll().Where(x => x.Id == idCart).FirstOrDefault();
+                car.CarrinhoProduto = DbConfig.Instance.CarrinhoProdutoRepository.FindAll().Where(x => x.Carrinho.Id == car.Id).ToList();
+                
+                //Check if the product is already in cart
+
+                foreach (var cps in car.CarrinhoProduto)
+                {
+                    if (cps.Produto.Id == produtoID)
+                    {
+                        cps.Quantidade++;
+                        return View("Carrinho", car);
+                    }
+                }       
+            }
+            else
+            {
+               car = DbConfig.Instance.CarrinhoRepository.Salvar(car);
+            }
+
+            
+            Produto prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoID).FirstOrDefault();
+
+            //Create new CP
+            CarrinhoProduto cp = new CarrinhoProduto();
+            cp = DbConfig.Instance.CarrinhoProdutoRepository.Salvar(cp);
+            cp.Produto = prod;
+            cp.Carrinho = car;
+            cp.Quantidade = 1;
+           
+            cp = DbConfig.Instance.CarrinhoProdutoRepository.Salvar(cp);
+
+            car.CarrinhoProduto = DbConfig.Instance.CarrinhoProdutoRepository.FindAll().Where(x => x.Carrinho.Id == car.Id).ToList();
+
+            HttpContext.Session["cartID"] = car.Id;
+
+            return View("Carrinho",car);
+        }
+
+
         //Auth Needed
         public ActionResult SaveComment(FormCollection form)
         {
@@ -302,6 +373,45 @@ namespace TropicalBears.App.Controllers
                 return true;
             }
             return false;
+        }
+
+        public ActionResult AumentarProduto(FormCollection form)
+        {
+            var cpId = Convert.ToInt32(form["carrinhoProdutoID"].ToString());
+            CarrinhoProduto cp = DbConfig.Instance.CarrinhoProdutoRepository.FindAll().Where(x => x.Id == cpId).FirstOrDefault();
+
+            try
+            {
+                cp.Quantidade = Convert.ToInt32(form["quantidade"]);
+                DbConfig.Instance.CarrinhoProdutoRepository.Salvar(cp);
+            }
+            catch (Exception)
+            {
+              //  throw;
+            }
+            
+            return RedirectToAction("Carrinho");
+        }
+        public ActionResult DeletarProduto(FormCollection form)
+        {
+            var cpId = Convert.ToInt32(form["carrinhoProdutoID"].ToString());
+            //CarrinhoProduto cp = DbConfig.Instance.CarrinhoProdutoRepository.FindAll().Where(x => x.Id == cpId).FirstOrDefault();
+            DbConfig.Instance.CarrinhoProdutoRepository.Deletar(cpId);
+
+            return RedirectToAction("Carrinho");
+        }
+        public ActionResult CupomDesconto(FormCollection form)
+        {
+            //Check if the code is valid
+            var desc = DbConfig.Instance.DescontoRepository.FindAll().Where(x => x.Codigo == form["desconto"].ToString()).FirstOrDefault();
+            if (desc != null)
+            {
+                //Attaching discount to cart
+                var cart = DbConfig.Instance.CarrinhoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["carrinhoId"].ToString())).FirstOrDefault();
+                cart.Desconto = desc;
+                DbConfig.Instance.CarrinhoRepository.Salvar(cart);
+            }
+            return RedirectToAction("Carrinho");
         }
     }
 }

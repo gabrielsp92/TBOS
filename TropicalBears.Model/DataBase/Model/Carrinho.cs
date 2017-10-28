@@ -13,7 +13,61 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual int Id { get; set; }
         public virtual User Usuario { get; set; }
         public virtual Boolean Status { get; set; }
-        public virtual IList<Produto> Produtos { get; set; }
+        public virtual IList<CarrinhoProduto> CarrinhoProduto { get; set; }
+        public virtual Desconto Desconto { get; set; }
+        public virtual double Entrega { get; set; }
+        
+
+        public virtual double getValorTotal()
+        {
+            //get the sum of all products values
+            double valor = 0;
+            foreach (var prod in CarrinhoProduto)
+            {
+                if (prod.Produto.Promocao)
+                {
+                    for (int k = 0; k < prod.Quantidade; k++)
+                    {
+                        valor += prod.Produto.PrecoPromocao;
+                    }      
+                }
+                else
+                {
+                    for (int i = 0; i < prod.Quantidade; i++)
+                    {
+                        valor += prod.Produto.Preco;
+                    }
+                }
+            }
+
+            //add discount
+            if(Desconto != null)
+            {
+                //type of discount
+                switch (Desconto.Tipo)
+                {
+                    case 1:
+                        valor = valor - (valor * 0.1);
+                        break;
+                    case 2:
+                        valor = valor - (valor * 0.2);
+                        break;
+                    case 3:
+                        valor = valor - 20;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            //add shipping
+            if (Entrega != 0)
+            {
+                valor = valor + Entrega;
+            }
+
+            return valor;
+        }
     }
     public class CarrinhoMap : ClassMapping<Carrinho>
     {
@@ -29,13 +83,23 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Class(typeof(User));
             });
 
-            Bag<Produto>(x => x.Produtos, collectionMapping =>
+            ManyToOne(x => x.Desconto, m =>
             {
-                collectionMapping.Table("CarrinhoProduto");
-                collectionMapping.Cascade(Cascade.None);
-                collectionMapping.Key(k => k.Column("carrinho_id"));
-            }
-            , map => map.ManyToMany(p => p.Column("produto_id")));
+                m.Cascade(Cascade.All);
+                m.Column("desconto_id");
+                m.Class(typeof(Desconto));
+            });
+
+            Bag<CarrinhoProduto>(x => x.CarrinhoProduto, m =>
+            {
+                m.Cascade(Cascade.None);
+                m.Key(k => k.Column("carrinho_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
+
+            Property(x => x.Entrega);
         }
 
     }

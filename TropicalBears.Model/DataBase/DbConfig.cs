@@ -30,6 +30,10 @@ namespace TropicalBears.Model.DataBase
         public ComentarioRepository ComentarioRepository { get; set; }
         public PesquisaRepository PesquisaRepository { get; set; }
         public EnderecoRepository EnderecoRepository { get; set; }
+        public DescontoRepository DescontoRepository { get; set; }
+
+        public CarrinhoRepository CarrinhoRepository { get; set; }
+        public CarrinhoProdutoRepository CarrinhoProdutoRepository { get; set; }
 
         private DbConfig()
         {
@@ -41,6 +45,10 @@ namespace TropicalBears.Model.DataBase
             this.ComentarioRepository = new ComentarioRepository(Session);
             this.PesquisaRepository = new PesquisaRepository(Session);
             this.EnderecoRepository = new EnderecoRepository(Session);
+            this.DescontoRepository = new DescontoRepository(Session);
+
+            this.CarrinhoRepository = new CarrinhoRepository(Session);
+            this.CarrinhoProdutoRepository = new CarrinhoProdutoRepository(Session);
 
         }
 

@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -291,6 +292,11 @@
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_PartialEnderecos.cshtml" />
+    <Content Include="Views\User\_AddEndereco.cshtml" />
+    <Content Include="Views\Home\Carrinho.cshtml" />
+    <Content Include="Views\Admin\Categoria.cshtml" />
+    <Content Include="Views\Carrinho\Index.cshtml" />
+    <Content Include="Views\Admin\Desconto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

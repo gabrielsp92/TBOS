@@ -72,8 +72,10 @@
   <ItemGroup>
     <Compile Include="DataBase\DbConfig.cs" />
     <Compile Include="DataBase\Model\Carrinho.cs" />
+    <Compile Include="DataBase\Model\CarrinhoProduto.cs" />
     <Compile Include="DataBase\Model\Categoria.cs" />
     <Compile Include="DataBase\Model\Comentario.cs" />
+    <Compile Include="DataBase\Model\Desconto.cs" />
     <Compile Include="DataBase\Model\Endereco.cs" />
     <Compile Include="DataBase\Model\FormaPagamento.cs" />
     <Compile Include="DataBase\Model\Imagem.cs" />
@@ -84,8 +86,11 @@
     <Compile Include="DataBase\Model\Tipo.cs" />
     <Compile Include="DataBase\Model\User.cs" />
     <Compile Include="DataBase\Model\Venda.cs" />
+    <Compile Include="DataBase\Repository\CarrinhoProdutoRepository.cs" />
+    <Compile Include="DataBase\Repository\CarrinhoRepository.cs" />
     <Compile Include="DataBase\Repository\CategoriaRepository.cs" />
     <Compile Include="DataBase\Repository\ComentarioRepository.cs" />
+    <Compile Include="DataBase\Repository\DescontoRepository.cs" />
     <Compile Include="DataBase\Repository\EnderecoRepository.cs" />
     <Compile Include="DataBase\Repository\ImagemRepository.cs" />
     <Compile Include="DataBase\Repository\PesquisaRepository.cs" />

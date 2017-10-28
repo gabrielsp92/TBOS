@@ -49,7 +49,8 @@
 {
     <div class="row">
         <h4 class="col-md-1">Endereço</h4>
-        <select class="form-control col-md-offset-1">
+        <select onchange="selectEndereco()" id="selectEndereco" class="form-control col-md-offset-1">
+            <option value="" disabled selected style="display:none;">Selecione</option>
             @foreach (var item in Model.Enderecos)
             {
                 <option value="@item.Id">@item.Descricao</option>
@@ -59,67 +60,10 @@
 
     </div>
 
-
-    <div class="row" id="formEndereco" style="display:none">
-        @using (Html.BeginForm("AddEndereco", "User", FormMethod.Post))
-        {
-            <h4>Novo Endereço</h4>
-            <div class="col-md-offset-1" style="margin-top:2%">
-                <div class="form-horizontal">
-
-                    <div class="form-group">
-                        <label for="descricao">Descrição</label>
-
-                        <input type="text" class="form-control" name="descricao" id="descricao" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="logradouro">Logradouro</label>
-
-                        <input type="text" class="form-control" name="logradouro" id="logradouro" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cep">CEP</label>
-
-                        <input type="text" class="form-control" name="cep" id="cep" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="bairro">Bairro</label>
-
-                        <input type="text" class="form-control" name="bairro" id="bairro" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="numero">Numero</label>
-
-                        <input type="text" class="form-control" name="numero" id="numero" />
-
-                    </div>
-
-                    <div class="form-group">
-                        <label for="complemento">Complemento</label>
-
-                        <input type="text" class="form-control" name="complemento" id="complemento" />
-
-                    </div>
-
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Salvar" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+    <div class="row" id="partialEndereco">
 
     </div>
+
         <hr />
 
 }
@@ -199,25 +143,55 @@
         <th>Preço Minimo</th>
         <th>Preço Maximo</th>
     </tr>
-    @foreach (var item in Model.Pesquisas)
+    @if (Model.Pesquisas != null)
     {
-        <tr>
-            <td>@item.Data</td>
-            <td>@item.Categoria</td>
-            <td>@item.Nome</td>
-            <td>@item.PrecoMinimo</td>
-            <td>@item.PrecoMaximo</td>
-      </tr>
+        foreach (var item in Model.Pesquisas)
+        {
+            <tr>
+                <td>@item.Data</td>
+                <td>@item.Categoria</td>
+                <td>@item.Nome</td>
+                <td>@item.PrecoMinimo</td>
+                <td>@item.PrecoMaximo</td>
+            </tr>
 
-    }   
+        }
+    }
+
 </table>
 
 <script>
     function toggleForm() {
-        var form = document.getElementById("formEndereco");
-        form.setAttribute("style", "display:block");
-        console.log(form);
+       // var form = document.getElementById("formEndereco");
+       // form.setAttribute("style", "display:block");
+
+        $.ajax({
+            url: '/User/InserirEndereco/',
+            contentType: 'aplication/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html'
+        }).success(function (result) {
+            $('#partialEndereco').html(result)
+        }).error(function (xhr, status) {
+            alert(status);
+        })
     }
+    function selectEndereco() {
+
+        var id = $('#selectEndereco').val();
+
+        $.ajax({
+            url: '/User/Endereco/' + id,
+            contentType: 'aplication/html; charset=utf-8',
+            type: 'GET',
+            dataType : 'html'
+        }).success(function (result) {
+            $('#partialEndereco').html(result)
+        }).error(function (xhr, status) {
+            alert(status);
+        })
+    }
+
 </script>
 
 

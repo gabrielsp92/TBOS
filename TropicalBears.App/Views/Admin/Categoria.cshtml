@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Categoria>
+
+@{
+    ViewBag.Title = "Categoria";
+}
+
+<h2>Categoria</h2>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @using (Html.BeginForm("AddCategoria", "Admin", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <input class="form-control" type="text" name="nome" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <input type="submit" value="Adicionar" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+    <tr>
+        <td>
+        
+        </td>
+    </tr>
+
+</table>

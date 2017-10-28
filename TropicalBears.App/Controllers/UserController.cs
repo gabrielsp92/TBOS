@@ -48,9 +48,47 @@ namespace TropicalBears.App.Controllers
             DbConfig.Instance.EnderecoRepository.Salvar(end);
             this.User.Enderecos.Add(end);
             return RedirectToAction("Index");
+        }
+        public ActionResult Endereco(int id)
+        {
+            if (this.User == null)
+                return RedirectToAction("Denied", "Home");
 
+            var end = DbConfig.Instance.EnderecoRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View("_PartialEnderecos", end);
+        }
+        public ActionResult InserirEndereco()
+        {
+            if (this.User == null)
+                return RedirectToAction("Denied", "Home");
 
+            return View("_AddEndereco");
+        }
+        public ActionResult DeleteEndereco(FormCollection form)
+        {
+            if (this.User == null)
+                return RedirectToAction("Denied", "Home");
 
+            var end = DbConfig.Instance.EnderecoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["enderecoID"].ToString())).FirstOrDefault();
+            DbConfig.Instance.EnderecoRepository.Delete(end.Id);
+            return RedirectToAction("Index");
+        }
+        public ActionResult SalvarEndereco(FormCollection form)
+        {
+            int id = Convert.ToInt32(form["enderecoID"].ToString());
+            Endereco end = DbConfig.Instance.EnderecoRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+
+            end.Descricao = form["descricao"];
+            end.Logradouro = form["logradouro"];
+            end.Numero = form["numero"];
+            end.Bairro = form["bairro"];
+            end.Cep = form["cep"];
+            end.Complemento = form["complemento"];
+
+            DbConfig.Instance.EnderecoRepository.Salvar(end);
+
+            return RedirectToAction("Index");
         }
     }
+
 }

@@ -1,0 +1,96 @@
+﻿@model TropicalBears.Model.DataBase.Model.Carrinho
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Pedido</h2>
+
+<div>
+    <h4>Pagamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach (var item in Model.CarrinhoProduto)
+        {
+            <dt>@item.Quantidade - @item.Produto.Nome</dt>
+            <dd>R$ @item.getValor()</dd>
+        }
+        <dt>
+            Entrega
+        </dt>
+        <dd>
+            R$ 10,0
+        </dd>
+
+        <dt>
+           Total
+        </dt>
+        <dd>
+          R$ @Model.getValorTotal()
+        </dd>
+
+    </dl>
+</div>
+<hr />
+<h3>Endereço de Entrega</h3>
+    @if(Model.Usuario.Enderecos != null && Model.Usuario.Enderecos.Count() > 0)
+    {
+        using (Html.BeginForm("SelecionarEndereço","Carrinho",FormMethod.Post))
+        {
+            <div class="form-group">
+                <label class="control-label">Endereço:</label>
+                <select name="endereco" class="form-control">
+                    <option value="0">Selecione</option>
+                    @foreach (var item in Model.Usuario.Enderecos)
+                    {
+                        <option value="@item.Id">@item.Descricao</option>
+                    }
+                </select>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-default" value="Confirmar" />
+                </div>
+            </div>
+
+        }
+
+    }
+    else
+    {
+        using (Html.BeginForm("Adicionar", "Carrinho", FormMethod.Post))
+        {
+            <div class="form-group">
+                <label for="descricao" class="control-label">Descrição:</label>
+                <input type="text" id="descricao" name="descricao" class="form-group" />
+            </div>
+            <div class="form-group">
+                <label for="cep" class="control-label">CEP:</label>
+                <input type="text" id="cep" name="cep" class="form-group" />
+            </div>
+            <div class="form-group">
+                <label for="logradouro" class="control-label">Logradouro:</label>
+                <input type="text" id="logradouro" name="logradouro" class="form-group" />
+            </div>
+            <div class="form-group">
+                <label for="bairro" class="control-label">Bairro:</label>
+                <input type="text" id="bairro" name="bairro" class="form-group" />
+            </div>
+            <div class="form-group">
+                <label for="numero" class="control-label">Numero:</label>
+                <input type="text" id="numero" name="numero" class="form-group" />
+            </div>
+            <div class="form-group">
+                <label for="complemento" class="control-label">Complemento:</label>
+                <input type="text" name="complemento" id="complemento" class="form-group" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-default" value="Confirmar" />
+            </div>
+        }
+    }
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

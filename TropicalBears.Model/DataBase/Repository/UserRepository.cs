@@ -41,7 +41,12 @@ namespace TropicalBears.Model.DataBase.Repository
         }
         public User isAuthenticated()
         {
-            var login = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name;
+            var login = "";
+            if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+            {
+                login = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name;
+            }
+           
             if (login == "")
             {
                 return null;

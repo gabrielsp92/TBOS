@@ -22,8 +22,14 @@
                     <h4><span style="text-decoration:line-through;color:red">R$@Model.Preco</span> R$@Model.PrecoPromocao</h4>
                     <p>@Model.Descricao</p>
                 }
-                
-            <a href="#" class="btn btn-default btn-sm">Adicionar Ao Carrinho <span class="glyphicon glyphicon-shopping-cart" ></span></a>
+                <!--Add to Cart-->
+
+            @using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
+            {
+                <input type="hidden" value="@Model.Id" name="produtoID" />
+                <button class="btn btn-default btn-sm">Adicionar Ao Carrinho <span class="glyphicon glyphicon-shopping-cart"></span></button>
+            }
+            
             <hr />
             <div class="row">
                 <div class="col-lg-6"><h4>Avaliações:</h4>

@@ -153,6 +153,60 @@ namespace TropicalBears.App.Controllers
             DbConfig.Instance.ImagemRepository.Delete(imagem);
             return RedirectToAction("ImagemProduto", prod);
         }
+        public ActionResult Categoria()
+        {
+            List<Categoria> cats = DbConfig.Instance.CategoriaRepository.FindAll().ToList();
+            return View(cats);
+        }
+        public ActionResult AddCategoria(FormCollection form)
+        {
+            Categoria cat = new Categoria();
+
+            if (form["nome"] != null && form["nome"].ToString() != "")
+            {
+                cat.Nome = form["nome"];
+                DbConfig.Instance.CategoriaRepository.Salvar(cat);
+            }
+           
+            return RedirectToAction("Categoria");
+        }
+
+        public ActionResult Desconto()
+        {
+            //check auth
+            if (!this.CheckAdmin())
+            {
+                return RedirectToAction("Denied", "Home");
+            }
+
+                var desc = DbConfig.Instance.DescontoRepository.FindAll();
+
+                return View(desc);
+            
+        }
+        public ActionResult CreateDesconto(FormCollection form)
+        {
+
+            var desc = new Desconto();
+            desc.Codigo = form["codigo"].ToString();
+            desc.Tipo = Convert.ToInt32(form["tipo"].ToString());
+
+            if (desc.Codigo != "" && desc.Tipo > 0)
+            {
+                DbConfig.Instance.DescontoRepository.Salvar(desc);
+            }
+
+            return RedirectToAction("Desconto");
+        }
+        public ActionResult DeleteDesconto(Desconto d)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            DbConfig.Instance.DescontoRepository.Deletar(d.Id);
+
+            return RedirectToAction("Index");
+        }
 
         public Boolean CheckAdmin()
         {
