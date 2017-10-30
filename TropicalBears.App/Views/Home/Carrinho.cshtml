@@ -16,8 +16,8 @@
     @foreach (var item in Model.CarrinhoProduto)
     {
         <tr>
-            <td><a href="/Home/Details/@item.Produto.Id">@item.Produto.Nome</a></td>
-            <td>R$ @item.getValor()</td>
+            <td><a href="/Home/Details/@item.Estoque.Produto.Id">@item.Estoque.Produto.Nome</a></td>
+            <td>R$ @item.getValorQuantidade()</td>
             <td>
                 @using (Html.BeginForm("AumentarProduto", "Home", FormMethod.Post))
                 {
@@ -45,20 +45,21 @@
             {
                 if (Model.Desconto.Tipo == 1)
                 {
-                    <p style="color:red">10%</p>
+                    <p style="color:red"> - 10%</p>
 
                 }
                 else if (Model.Desconto.Tipo == 2)
                 {
-                    <p style="color:red">20%</p>
+                    <p style="color:red"> - 20%</p>
                 }
                 else if (Model.Desconto.Tipo == 3)
                 {
-                    <p style="color:red">R$20,00</p>
+                    <p style="color:red"> - R$20,00</p>
                 }
 
             }
         </td>
+            
         <td>
             @if (Model.Desconto == null)
             {  
@@ -76,6 +77,15 @@
             }
         </td>
     </tr>
+        @if ( Model.Entrega > 0)
+        {
+            <tr>
+                <td>Taxa de Entrega:</td>
+                <td>+ R$ @Model.Entrega</td>
+                <td></td>
+            </tr>
+        }
+      
     <tr>
         <td>
             TOTAL

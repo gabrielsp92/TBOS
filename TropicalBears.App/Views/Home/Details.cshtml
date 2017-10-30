@@ -1,4 +1,4 @@
-﻿@model TropicalBears.Model.DataBase.Model.Produto
+﻿@model TropicalBears.Model.DataBase.Model.Estoque
 
 @{
     ViewBag.Title = "Details";
@@ -10,33 +10,24 @@
     <div class="row">
         <hr />
         <div class="col-lg-6">
-            <h2>@Model.Nome</h2>
-            @if (!Model.Promocao)
-            {
-                <h4>R$@Model.Preco</h4>
-                <p>@Model.Descricao</p>
-            }
-            
-                @if (Model.Promocao)
-                {
-                    <h4><span style="text-decoration:line-through;color:red">R$@Model.Preco</span> R$@Model.PrecoPromocao</h4>
-                    <p>@Model.Descricao</p>
-                }
-                <!--Add to Cart-->
+            <h2>@Model.Produto.Nome</h2>
+            <h4>R$@Model.getPreco()</h4>
+            <p>@Model.Produto.Descricao</p>
+                            <!--Add to Cart-->
 
             @using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
             {
-                <input type="hidden" value="@Model.Id" name="produtoID" />
+                <input type="hidden" value="@Model.Id" name="estoqueId" />
                 <button class="btn btn-default btn-sm">Adicionar Ao Carrinho <span class="glyphicon glyphicon-shopping-cart"></span></button>
             }
             
             <hr />
             <div class="row">
                 <div class="col-lg-6"><h4>Avaliações:</h4>
-                <p><span style="color:green"><span class="glyphicon glyphicon-thumbs-up"></span> @Model.MediaAvaliacao()%</span> / <span style="color:red"><span class="glyphicon glyphicon-thumbs-down"></span> @Model.MediaAvaliacaoNegativa()%</span> </p></div>
+                <p><span style="color:green"><span class="glyphicon glyphicon-thumbs-up"></span> @Model.Produto.MediaAvaliacao()%</span> / <span style="color:red"><span class="glyphicon glyphicon-thumbs-down"></span> @Model.Produto.MediaAvaliacaoNegativa()%</span> </p></div>
             </div>
             <div>
-                @foreach (var item in Model.Comentarios)
+                @foreach (var item in Model.Produto.Comentarios)
                 {
                                             <!-- Left-aligned -->
                         <div class="media">
@@ -67,7 +58,7 @@
                 {
                     <hr />
                     <h4>Avalie este produto:</h4>
-                    <input type="hidden" value="@Model.Id" name="produtoID" />
+                    <input type="hidden" value="@Model.Produto.Id" name="produtoID" />
 
                     <div class="form-group">
                         <div class="col-md-12">
@@ -98,7 +89,7 @@
     </div>
 
         <div class="col-md-4">
-            <img src="~/Upload/@Model.Imagens.FirstOrDefault().Img" class="img-thumbnail" />
+            <img src="~/Upload/@Model.Produto.Imagens.FirstOrDefault().Img" class="img-thumbnail" />
         </div>
     </div>
     </div>

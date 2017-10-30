@@ -12,18 +12,17 @@ namespace TropicalBears.Model.DataBase.Model
     {
         public virtual int Id { get; set; }
         public virtual Categoria Categoria { get; set; }
-        public virtual Subcategoria Subcategoria { get; set; }
-        public virtual Tipo Tipo { get; set; }
-        public virtual double Preco { get; set; }
+        //public virtual Subcategoria Subcategoria { get; set; }
+        //public virtual Tipo Tipo { get; set; }
+
+        //public virtual double Preco { get; set; }
+
         public virtual string Nome { get; set; }
         public virtual string Descricao { get; set; }
 
-        public virtual Boolean Promocao { get; set; }
-        public virtual double PrecoPromocao { get; set; }
-
-        public virtual int Estoque { get; set; }
-        public virtual DateTime CreatedAt { get; set; }
-        public virtual DateTime UpdatedAt { get; set; }
+        //public virtual int Estoque { get; set; }
+        //public virtual DateTime CreatedAt { get; set; }
+        //public virtual DateTime UpdatedAt { get; set; }
 
         //comments
         public virtual IList<Comentario> Comentarios { get; set; }
@@ -72,7 +71,7 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Lazy(LazyRelation.NoLazy);
             });
 
-            ManyToOne(x => x.Subcategoria, m => {
+           /* ManyToOne(x => x.Subcategoria, m => {
                 m.Cascade(Cascade.All);
                 m.Column("subcategoria_id");
                 m.Class(typeof(Subcategoria));
@@ -84,17 +83,12 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Column("tipo_id");
                 m.Class(typeof(Tipo));
                 m.Lazy(LazyRelation.NoLazy);
-            }); 
+            }); */
 
-            Property(x => x.Preco);
+           
             Property(x => x.Nome);
             Property(x => x.Descricao);
-            Property(x => x.Promocao);
-            Property(x => x.PrecoPromocao);
-            Property(x => x.Estoque);
-            Property(x => x.CreatedAt);
-            Property(x => x.UpdatedAt);
-
+           
             Bag<Imagem>(x => x.Imagens, m =>
             {
                 m.Cascade(Cascade.All);

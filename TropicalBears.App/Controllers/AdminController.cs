@@ -47,7 +47,7 @@ namespace TropicalBears.App.Controllers
 
             var idcat = Convert.ToInt32(form["categorias"].ToString());
             p.Categoria = DbConfig.Instance.CategoriaRepository.FindAll().Where(x => x.Id == idcat).FirstOrDefault();
-            p.CreatedAt = DateTime.Now;
+            
             DbConfig.Instance.ProdutoRepository.Salvar(p);
 
             return RedirectToAction("Index");
@@ -68,7 +68,7 @@ namespace TropicalBears.App.Controllers
             if (!this.CheckAdmin())
                 return RedirectToAction("Denied", "Home");
 
-            p.UpdatedAt = DateTime.Now;
+            
             DbConfig.Instance.ProdutoRepository.Salvar(p);
 
             return RedirectToAction("Index");
@@ -207,6 +207,11 @@ namespace TropicalBears.App.Controllers
 
             return RedirectToAction("Index");
         }
+        public ActionResult Compras()
+        {
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().OrderByDescending(x=>x.Quantidade);
+            return View(est);
+        }
 
         public Boolean CheckAdmin()
         {
@@ -219,6 +224,57 @@ namespace TropicalBears.App.Controllers
                 }
             }
             return false;
+        }
+        public ActionResult AddEstoque(FormCollection form)
+        {
+            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
+            var prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
+            ViewBag.Produto = prod;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateEstoque(FormCollection form)
+        {
+            //checking if the product is already registered in stock
+            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Id == produtoId).FirstOrDefault();
+            var qtd = Convert.ToInt32(form["quantidade"].ToString());
+            var pco = Convert.ToDouble(form["precoCusto"].ToString());
+            //if is registered
+            if ( est != null)
+            {
+                est.Quantidade += qtd;
+                est.PrecoCusto += pco;
+                DbConfig.Instance.EstoqueRepository.Salvar(est);
+            }
+            else
+            {
+                est = new Estoque();
+                est.Produto = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
+                est.Quantidade = qtd;
+                est.PrecoCusto = pco;
+                DbConfig.Instance.EstoqueRepository.Salvar(est);
+
+            }
+            return RedirectToAction("Compras");
+        }
+
+        public ActionResult Vendas()
+        {
+            var vendas = DbConfig.Instance.VendaRepository.FindAll().OrderBy(x => x.Data);
+            return View(vendas);
+        }
+        public ActionResult ComprarProdutos()
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll();
+            return View(prods);
+        }
+        public ActionResult FluxoDeCaixa()
+        {
+            var vendas = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Status == 1).OrderByDescending(x=>x.Data);
+
+            return View(vendas);
         }
     }
 }

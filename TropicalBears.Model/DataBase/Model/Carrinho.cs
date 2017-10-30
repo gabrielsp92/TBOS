@@ -16,7 +16,8 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual IList<CarrinhoProduto> CarrinhoProduto { get; set; }
         public virtual Desconto Desconto { get; set; }
         public virtual double Entrega { get; set; }
-        
+              
+        public virtual Venda Venda { get; set; }
 
         public virtual double getValorTotal()
         {
@@ -24,20 +25,12 @@ namespace TropicalBears.Model.DataBase.Model
             double valor = 0;
             foreach (var prod in CarrinhoProduto)
             {
-                if (prod.Produto.Promocao)
-                {
-                    for (int k = 0; k < prod.Quantidade; k++)
-                    {
-                        valor += prod.Produto.PrecoPromocao;
-                    }      
-                }
-                else
-                {
+               
                     for (int i = 0; i < prod.Quantidade; i++)
                     {
-                        valor += prod.Produto.Preco;
+                        valor += prod.getValor();
                     }
-                }
+                
             }
 
             //add discount
@@ -98,6 +91,16 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Inverse(true);
             },
             r => r.OneToMany());
+
+            
+
+            ManyToOne(x => x.Venda, m =>
+            {
+                m.Cascade(Cascade.All);
+                m.Column("venda_id");
+                m.Class(typeof(Desconto));
+            });
+
 
             Property(x => x.Entrega);
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Produto>
+﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Estoque>
 
 @{
     ViewBag.Title = "Camisas";
@@ -47,17 +47,17 @@
     @foreach (var item in Model)
     {
 
-        if (item.Imagens != null && item.Imagens.Count > 0)
+        if (item.Produto.Imagens != null && item.Produto.Imagens.Count > 0)
         {
 
             <div class="col-lg-3">
                 <a href="Details/@item.Id">
-                    <img src="~/Upload/@item.Imagens.First().Img" class="img-responsive" />
+                    <img src="~/Upload/@item.Produto.Imagens.First().Img" class="img-responsive" />
                 </a>
 
-                <h4>@item.Nome</h4>
-                <h4>R$@item.Preco</h4>
-                <p>@item.Descricao</p>
+                <h4>@item.Produto.Nome</h4>
+                <h4>R$@item.getPreco()</h4>
+                <p>@item.Produto.Descricao</p>
             </div>
 
         }

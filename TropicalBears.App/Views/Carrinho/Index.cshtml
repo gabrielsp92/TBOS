@@ -12,14 +12,30 @@
     <dl class="dl-horizontal">
         @foreach (var item in Model.CarrinhoProduto)
         {
-            <dt>@item.Quantidade - @item.Produto.Nome</dt>
+            <dt>@item.Quantidade - @item.Estoque.Produto.Nome</dt>
             <dd>R$ @item.getValor()</dd>
+        }
+
+        @if(@Model.Desconto != null)
+        {
+            <dt>Desconto</dt>
+            if (@Model.Desconto.Tipo == 1)
+            {
+                <dd>- 10%</dd>
+            }else if (@Model.Desconto.Tipo == 2)
+            {
+                <dd>- 20%</dd>
+            }else if (@Model.Desconto.Tipo == 3)
+            {
+                <dd>- R$20,00</dd>
+            }
+
         }
         <dt>
             Entrega
         </dt>
         <dd>
-            R$ 10,0
+            + R$ 10,0
         </dd>
 
         <dt>
@@ -33,23 +49,24 @@
 </div>
 <hr />
 <h3>Endereço de Entrega</h3>
+
     @if(Model.Usuario.Enderecos != null && Model.Usuario.Enderecos.Count() > 0)
     {
         using (Html.BeginForm("SelecionarEndereço","Carrinho",FormMethod.Post))
         {
             <div class="form-group">
                 <label class="control-label">Endereço:</label>
-                <select name="endereco" class="form-control">
-                    <option value="0">Selecione</option>
+                <select name="enderecoId" class="form-control">
                     @foreach (var item in Model.Usuario.Enderecos)
                     {
                         <option value="@item.Id">@item.Descricao</option>
                     }
                 </select>
-
+                <br />
                 <div class="form-group">
                     <input type="submit" class="btn btn-default" value="Confirmar" />
                 </div>
+
             </div>
 
         }
@@ -91,6 +108,5 @@
     }
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar", "Index")
 </p>

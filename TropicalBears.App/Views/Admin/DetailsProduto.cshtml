@@ -6,6 +6,13 @@
 
 <h2>@Model.Nome</h2>
 
+    @using (Html.BeginForm("AddEstoque", "Admin", FormMethod.Post))
+    {
+        <input type="hidden" name="produtoId" value="@Model.Id" />
+        <input type="submit" value="Adicionar ao Estoque" class="btn btn-default" />
+    }
+
+
 <div>
    
     <hr />
@@ -17,13 +24,6 @@
         <p>@Html.ActionLink("Edit", "EditProduto", new { id = Model.Id })</p>
 
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Preco)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Preco)
-            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -41,45 +41,6 @@
                 @Html.DisplayFor(model => model.Descricao)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Promocao)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Promocao)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.PrecoPromocao)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.PrecoPromocao)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Estoque)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Estoque)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreatedAt)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedAt)
-            </dd>
             <dd>
                 <p>
                     @Html.ActionLink("Voltar", "Index")
@@ -92,12 +53,16 @@
     <h4>Imagens</h4>
         <p>@Html.ActionLink("Adicionar", "ImagemProduto", new { id = Model.Id })</p>
     </div>
-    @foreach (var img in Model.Imagens)
+    @if (Model.Imagens != null)
     {
-        <div class="col-md-4">
-            <img src="~/Upload/@img.Img" class="img-thumbnail"/>
-        </div>
+        foreach (var img in Model.Imagens)
+        {
+            <div class="col-md-4">
+                <img src="~/Upload/@img.Img" class="img-thumbnail" />
+            </div>
+        }
     }
+   
          </div>
 </div>
 

@@ -15,9 +15,9 @@ namespace TropicalBears.App.Controllers
     {
         public ActionResult Index()
         {
-            
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll();
-            return View(prods);
+
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Quantidade > 0);
+            return View(est);
         }
 
         public ActionResult Produtos()
@@ -108,13 +108,13 @@ namespace TropicalBears.App.Controllers
 
         public ActionResult Camisas()
         {
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x=>x.Categoria.Nome == "Camisas");
-            return View(prods);
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x=>x.Produto.Categoria.Nome == "Camisas").Where(k=>k.Quantidade > 0);
+            return View(est);
         }
         public ActionResult Acessorios()
         {
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessórios");
-            return View(prods);
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(k => k.Quantidade > 0).Where(x => x.Produto.Categoria.Nome == "Acessórios");
+            return View(est);
         }
         [HttpPost]
         public ActionResult Buscar(FormCollection form)
@@ -156,14 +156,14 @@ namespace TropicalBears.App.Controllers
                 pesq.Usuario = usr;
             }
             DbConfig.Instance.PesquisaRepository.Salvar(pesq);
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(k => k.Quantidade > 0).Where(x => x.Produto.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
 
             if (precoMax > 0)
             {
-                 prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+                 est = est.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
             }
             
-            return View("Index", prods);
+            return View("Index", est);
         }
 
         [HttpPost]
@@ -209,15 +209,15 @@ namespace TropicalBears.App.Controllers
             }
             DbConfig.Instance.PesquisaRepository.Salvar(pesq);
 
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x=> x.Categoria.Nome == "Camisas");
-            prods = prods.Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(k => k.Quantidade > 0).Where(x=> x.Produto.Categoria.Nome == "Camisas");
+            est = est.Where(x => x.Produto.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
 
             if (precoMax > 0)
             {
-                prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+                est = est.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
             }
 
-            return View("Camisas", prods);
+            return View("Camisas", est);
         }
         [HttpPost]
         public ActionResult BuscarAcessorios(FormCollection form)
@@ -261,20 +261,20 @@ namespace TropicalBears.App.Controllers
             }
             DbConfig.Instance.PesquisaRepository.Salvar(pesq);
 
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Categoria.Nome == "Acessorios");
-            prods = prods.Where(x => x.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Categoria.Nome == "Acessorios").Where(k => k.Quantidade > 0);
+            est = est.Where(x => x.Produto.Nome.ToUpper().Contains(form["busca"].ToString().ToUpper()));
 
             if (precoMax > 0)
             {
-                prods = prods.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
+                est = est.Where(x => x.Preco >= precoMin).Where(x => x.Preco <= precoMax).OrderBy(x => x.Preco);
             }
 
-            return View("Acessorios", prods);
+            return View("Acessorios", est);
         }
         public ActionResult Details(int id)
         {
-            Produto p = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
-            return View(p);
+            Estoque e = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(e);
         }
 
         //CART METHOD
@@ -301,7 +301,8 @@ namespace TropicalBears.App.Controllers
         }
         public ActionResult AddToCart(FormCollection form)
         {
-            var produtoID = Convert.ToInt32(form["produtoID"].ToString());
+            //get the product id
+            var estoqueId = Convert.ToInt32(form["estoqueId"].ToString());
             Carrinho car = new Carrinho();
 
             //Check if cart exists
@@ -315,7 +316,7 @@ namespace TropicalBears.App.Controllers
 
                 foreach (var cps in car.CarrinhoProduto)
                 {
-                    if (cps.Produto.Id == produtoID)
+                    if (cps.Estoque.Id == estoqueId)
                     {
                         cps.Quantidade++;
                         return View("Carrinho", car);
@@ -328,12 +329,12 @@ namespace TropicalBears.App.Controllers
             }
 
             
-            Produto prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoID).FirstOrDefault();
+            Estoque est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Id == estoqueId).FirstOrDefault();
 
             //Create new CP
             CarrinhoProduto cp = new CarrinhoProduto();
             cp = DbConfig.Instance.CarrinhoProdutoRepository.Salvar(cp);
-            cp.Produto = prod;
+            cp.Estoque = est;
             cp.Carrinho = car;
             cp.Quantidade = 1;
            

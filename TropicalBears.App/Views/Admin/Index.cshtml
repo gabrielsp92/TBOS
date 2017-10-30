@@ -11,20 +11,12 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Preco)
-        </th>
+  
         <th>
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Promocao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PrecoPromocao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estoque)
+            @Html.DisplayName("Categoria")
         </th>
         <th>
             Imagens
@@ -35,19 +27,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Preco)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Promocao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrecoPromocao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estoque)
+            @Html.DisplayFor(modelItem => item.Categoria.Nome)
         </td>
         <td>
             <a href="/Admin/ImagemProduto/@item.Id"><span class="glyphicon glyphicon-picture"></span></a>

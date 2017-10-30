@@ -11,20 +11,17 @@ namespace TropicalBears.Model.DataBase.Model
     public class CarrinhoProduto
     {
         public virtual int Id { get; set; }
-        public virtual Produto Produto { get; set; }
+        public virtual Estoque Estoque { get; set; }
         public virtual Carrinho Carrinho { get; set; }
         public virtual int Quantidade { get; set; }
 
         public virtual Double getValor()
         {
-            if (Produto.Promocao == true)
-            {
-                return Quantidade * Produto.PrecoPromocao;
-            }
-            else
-            {
-                return Quantidade * Produto.Preco;
-            }
+            return this.Estoque.getPreco();
+        }
+        public virtual double getValorQuantidade()
+        {
+            return this.Estoque.getPreco() * this.Quantidade;
         }
     }
     public class CarrinhoProdutoMap : ClassMapping<CarrinhoProduto>
@@ -34,10 +31,10 @@ namespace TropicalBears.Model.DataBase.Model
             Id(x => x.Id, m => m.Generator(Generators.Identity));
             Property(x => x.Quantidade);
 
-            ManyToOne(x => x.Produto, m => {
+            ManyToOne(x => x.Estoque, m => {
                 m.Cascade(Cascade.None);
-                m.Column("produto_id");
-                m.Class(typeof(Produto));
+                m.Column("estoque_id");
+                m.Class(typeof(Estoque));
                 m.Lazy(LazyRelation.NoLazy);
             });
             ManyToOne(x => x.Carrinho, m => {
