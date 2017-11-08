@@ -15,6 +15,7 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual User Usuario { get; set; }
         public virtual Produto Produto { get; set; }
         public virtual String Avaliacao { get; set; }
+        public virtual DateTime Data { get; set; }
     }
 
     public class ComentarioMap : ClassMapping<Comentario>
@@ -24,6 +25,7 @@ namespace TropicalBears.Model.DataBase.Model
             Id(x => x.Id, m => m.Generator(Generators.Identity));
             Property(x => x.Texto);
             Property(x => x.Avaliacao);
+            Property(x => x.Data);
             ManyToOne(x => x.Usuario, m => {
                 m.Cascade(Cascade.All);
                 m.Column("user_id");
@@ -31,7 +33,7 @@ namespace TropicalBears.Model.DataBase.Model
             });
 
             ManyToOne(x => x.Produto, m => {
-                m.Cascade(Cascade.All);
+                m.Cascade(Cascade.None);
                 m.Column("produto_id");
                 m.Class(typeof(Produto));
             });

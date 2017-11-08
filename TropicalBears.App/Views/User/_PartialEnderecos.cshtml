@@ -5,17 +5,17 @@
     <input type="hidden" name="enderecoID" value="@Model.Id">
     <dl class="col-lg-offset-1">
     <dt>Descrição</dt>
-    <dd><input class="form-control" type="text" id="descricao" name="descricao" value="@Model.Descricao" /></dd>
+    <dd><input class="form-control" type="text" id="descricao" name="descricao" value="@Model.Descricao" required /></dd>
     <dt>Logradouro</dt>
-    <dd><input class="form-control" type="text" name="logradouro" value="@Model.Logradouro"/></dd>
+    <dd><input class="form-control" type="text" name="logradouro" value="@Model.Logradouro" required/></dd>
     <dt>CEP</dt>
-    <dd><input class="form-control" type="text" name="cep" value="@Model.Cep" /></dd>
+    <dd><input class="form-control" type="text" name="cep" value="@Model.Cep" required/></dd>
     <dt>Bairro</dt>
-    <dd><input class="form-control" type="text" name="bairro" value="@Model.Bairro" /></dd>
+    <dd><input class="form-control" type="text" name="bairro" value="@Model.Bairro" required /></dd>
     <dt>Numero</dt>
-    <dd><input class="form-control" type="text" name="numero" value="@Model.Numero"/></dd>
+    <dd><input class="form-control" type="text" name="numero" value="@Model.Numero" required/></dd>
     <dt>Complemento</dt>
-    <dd><input class="form-control" type="text" name="complemento" value="@Model.Complemento" /></dd>
+    <dd><input class="form-control" type="text" name="complemento" value="@Model.Complemento" required /></dd>
 </dl>
 <div class="row col-lg-offset-1">
     <button class="btn btn-sm"><span class="glyphicon glyphicon-pencil"></span> Salvar</button>

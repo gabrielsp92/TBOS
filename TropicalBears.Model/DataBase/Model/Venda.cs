@@ -42,6 +42,8 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Column("formapagamento_id");
                 m.Class(typeof(FormaPagamento));
             });
+
+            //{"The type is incompatible; expected assignable to TropicalBears.Model.DataBase.Model.Venda\r\nNome do parâmetro: entityType"}
             Property(x => x.ValorTotal);
             Property(x => x.Status);
             Property(x => x.Data);

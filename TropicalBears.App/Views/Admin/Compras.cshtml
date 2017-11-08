@@ -5,29 +5,43 @@
 }
 
 <h2>Compras</h2>
-
 <p>
-    @Html.ActionLink("Adicionar", "Create")
+    @Html.ActionLink("Adicionar", "ComprarProdutos")
 </p>
+<hr />
+@using (Html.BeginForm("ProcurarCompra", "Admin", FormMethod.Post))
+{
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" name="nome_produto" placeholder="Nome" />
+            <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+}
+<hr />
+
+<h4>Em estoque:</h4>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Produto.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </th>
-        <th>
-            Preço de Custo
-        </th>
-        <th>
-            Preço de Custo Medio
-        </th>
-        <th>
-            Preço de Venda
-        </th>
-        <th></th>
-    </tr>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Produto.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                Preço de Custo
+            </th>
+            <th>
+                Preço de Custo Medio
+            </th>
+            <th>
+                Preço de Venda
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
 @foreach (var item in Model) {
     <tr>

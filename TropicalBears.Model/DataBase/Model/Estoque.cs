@@ -15,8 +15,7 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual int Quantidade { get; set; }
         public virtual double Preco { get; set; }
 
-        public virtual IList<CarrinhoProduto> CarrinhoProduto { get; set; }
-
+      //  public virtual IList<CarrinhoProduto> CarrinhoProduto { get; set; }
         private double precoCusto;
 
         public virtual double PrecoCusto
@@ -42,15 +41,15 @@ namespace TropicalBears.Model.DataBase.Model
             return Math.Round(this.precoCusto / Quantidade, 2);
         }
 
-        public virtual List<CarrinhoProduto> VendaMes(int mes)
+      /*  public virtual List<CarrinhoProduto> VendaMes(int mes)
         {
             if (this.CarrinhoProduto != null && this.CarrinhoProduto.Count() > 0)
             return this.CarrinhoProduto.Where(x => x.Carrinho.Venda != null).Where(x => x.Carrinho.Venda.Data.Month == mes).ToList();
 
             return null;
         }
-
-        public virtual int QtdVendaMes(int mes)
+        */
+        /*public virtual int QtdVendaMes(int mes)
         {
             int qtd = 0;
             if (this.CarrinhoProduto != null && this.CarrinhoProduto.Count() > 0)
@@ -79,7 +78,7 @@ namespace TropicalBears.Model.DataBase.Model
             return venda;
         }
 
-
+    */
 
     }
     public class EstoqueMap : ClassMapping<Estoque>
@@ -92,19 +91,20 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Cascade(Cascade.All);
                 m.Column("produto_id");
                 m.Class(typeof(Produto));
+                m.Lazy(LazyRelation.NoLazy);
             });
 
             Property(x => x.Quantidade);
             Property(x => x.PrecoCusto);
 
-            Bag<CarrinhoProduto>(x => x.CarrinhoProduto, m =>
+          /*  Bag<CarrinhoProduto>(x => x.CarrinhoProduto, m =>
             {
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("estoque_id"));
                 m.Lazy(CollectionLazy.NoLazy);
                 m.Inverse(true);
             },
-            r => r.OneToMany());
+            r => r.OneToMany());*/
         }
 
     }

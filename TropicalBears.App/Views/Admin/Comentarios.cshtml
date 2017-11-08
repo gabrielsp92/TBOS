@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TropicalBears.Model.DataBase.Model.Comentario>
+
+@{
+    ViewBag.Title = "Comentarios";
+}
+
+<h2>Comentarios</h2>
+
+<hr />
+
+@using (Html.BeginForm("ProcurarComentario", "Admin", FormMethod.Post))
+{
+    <div class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" name="nome_produto" placeholder="Nome do Produto" />
+            <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+}
+
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Produto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Avaliacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Data)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Produto.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avaliacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avaliacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data)
+        </td>
+        <td>
+            @Html.ActionLink("Detalhes", "DetalhesComentarios", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -4,10 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Pedido</h2>
+<h2>Finalizar Pedido</h2>
 
 <div>
-    <h4>Pagamento</h4>
     <hr />
     <dl class="dl-horizontal">
         @foreach (var item in Model.CarrinhoProduto)
@@ -47,58 +46,97 @@
 
     </dl>
 </div>
-<hr />
-<h3>Endereço de Entrega</h3>
 
-    @if(Model.Usuario.Enderecos != null && Model.Usuario.Enderecos.Count() > 0)
+
+
+<!--ADRESS-->
+<hr />
+    @if (ViewBag.enderecosValidos != null && Enumerable.Count(ViewBag.enderecosValidos) > 0)
     {
-        using (Html.BeginForm("SelecionarEndereço","Carrinho",FormMethod.Post))
-        {
-            <div class="form-group">
-                <label class="control-label">Endereço:</label>
-                <select name="enderecoId" class="form-control">
-                    @foreach (var item in Model.Usuario.Enderecos)
-                    {
-                        <option value="@item.Id">@item.Descricao</option>
-                    }
-                </select>
-                <br />
+        <h3 style="margin-bottom: 2%">Endereço para entrega <button onclick="novoEndereco()" id="toggleButton" class="btn btn-sm">Novo</button></h3>
+        <!--ComboBox Adress-->
+            <form action="/Carrinho/SelecionarEndereco" method="post" id="comboBoxEndereco">  
+                <div class="form-inline">
+                    <div class="form-group">
+                        <select name="enderecoId" class="form-control" id="enderecoId">
+                            @foreach (var item in ViewBag.enderecosValidos)
+                            {
+                                <option value="@item.Id">@item.Descricao</option>
+                            }
+                        </select>
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default" value="Confirmar" />
+                    </div>
+                    
+                </div>
+            </form>
+
+            <!--Form Adress-->
+        <form action="/Carrinho/Adicionar" method="post" style="display:none" id="novoEndereco">
+            <div class="form-horizontal" id="detailsAdress">
+                <div class="form-group">
+                    <label for="descricao" class="control-label">Descrição:</label>
+                    <input type="text" id="descricao" name="descricao" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="cep" class="control-label">CEP:</label>
+                    <input type="text" id="cep" name="cep" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="logradouro" class="control-label">Logradouro:</label>
+                    <input type="text" id="logradouro" name="logradouro" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="bairro" class="control-label">Bairro:</label>
+                    <input type="text" id="bairro" name="bairro" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="numero" class="control-label">Numero:</label>
+                    <input type="text" id="numero" name="numero" class="form-control" required  />
+                </div>
+                <div class="form-group">
+                    <label for="complemento" class="control-label">Complemento:</label>
+                    <input type="text" name="complemento" id="complemento" class="form-control" required  />
+                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-default" value="Confirmar" />
                 </div>
 
             </div>
-
-        }
-
+        </form>
     }
     else
     {
+      <h3 style="margin-bottom: 2%">Endereço para entrega</h3>
+
         using (Html.BeginForm("Adicionar", "Carrinho", FormMethod.Post))
         {
             <div class="form-group">
                 <label for="descricao" class="control-label">Descrição:</label>
-                <input type="text" id="descricao" name="descricao" class="form-group" />
+                <input type="text" id="descricao" name="descricao" class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="cep" class="control-label">CEP:</label>
-                <input type="text" id="cep" name="cep" class="form-group" />
+                <input type="text" id="cep" name="cep"class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="logradouro" class="control-label">Logradouro:</label>
-                <input type="text" id="logradouro" name="logradouro" class="form-group" />
+                <input type="text" id="logradouro" name="logradouro" class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="bairro" class="control-label">Bairro:</label>
-                <input type="text" id="bairro" name="bairro" class="form-group" />
+                <input type="text" id="bairro" name="bairro" class="form-control" required/>
             </div>
             <div class="form-group">
                 <label for="numero" class="control-label">Numero:</label>
-                <input type="text" id="numero" name="numero" class="form-group" />
+                <input type="text" id="numero" name="numero" class="form-control" required />
             </div>
             <div class="form-group">
                 <label for="complemento" class="control-label">Complemento:</label>
-                <input type="text" name="complemento" id="complemento" class="form-group" />
+                <input type="text" name="complemento" id="complemento" class="form-control" required />
             </div>
 
             <div class="form-group">
@@ -106,7 +144,24 @@
             </div>
         }
     }
-
+<hr />
+<h3></h3>
 <p>
     @Html.ActionLink("Voltar", "Index")
 </p>
+
+
+<script>
+    function novoEndereco() {
+        document.getElementById("comboBoxEndereco").style.display = "none";
+        document.getElementById("novoEndereco").style.display = "block";
+        document.getElementById("toggleButton").innerHTML = "Cancel";
+        document.getElementById("toggleButton").onclick = cancelNovoEndereco;
+    }
+    function cancelNovoEndereco() {
+        document.getElementById("comboBoxEndereco").style.display = "block";
+        document.getElementById("novoEndereco").style.display = "none";
+        document.getElementById("toggleButton").innerHTML = "Novo";
+        document.getElementById("toggleButton").onclick = novoEndereco;
+    }
+</script>

@@ -1,0 +1,55 @@
+﻿@model TropicalBears.Model.DataBase.Model.Venda
+
+@{
+    ViewBag.Title = "Venda";
+}
+<h2>Compra</h2>
+<div>
+    <hr />
+   
+    <dl class="dl-horizontal">
+        <dt>
+            Produtos
+        </dt>
+        @foreach (var item in Model.Carrinho.CarrinhoProduto)
+        {
+            <dd>@item.Quantidade - <a href="/home/details/@item.Estoque.Id"> @item.Estoque.Produto.Nome</a></dd>
+        }
+        <dt>
+            Valor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorTotal)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+
+
+
+        @if (Model.Status == 0)
+        {
+            <dd>Aguardando Pagamento</dd>
+        }else if(Model.Status == 1)
+        {
+            <dd style="color:green">Pagamento Confirmado</dd>
+        }else if(Model.Status == 2)
+        {
+            <dd style="color:red;">Cancelado</dd>
+        }else if (Model.Status == 3){
+            <dd style="color:cornflowerblue">Recebido</dd>
+        }
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -353,14 +353,17 @@ namespace TropicalBears.App.Controllers
         {
             if (this.CheckLogIn())
             {
+
                 Comentario com = new Comentario();
                 com.Avaliacao = form["Avaliacao"].ToString();
                 com.Texto = form["texto"].ToString();
                 com.Produto = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["produtoID"])).FirstOrDefault();
                 com.Usuario = DbConfig.Instance.UserRepository.isAuthenticated();
+                com.Data = DateTime.Now;
                 DbConfig.Instance.ComentarioRepository.Salvar(com);
 
-                return View("Details",com.Produto);
+                var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Id == com.Produto.Id).FirstOrDefault();
+                return View("Details",est);
             }
             return RedirectToAction("Denied");
 

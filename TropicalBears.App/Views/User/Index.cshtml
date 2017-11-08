@@ -45,13 +45,13 @@
     </dl>
 </div>
 <hr />
-@if (Model.Enderecos.Count() > 0)
+@if (ViewBag.enderecosValidos != null && Enumerable.Count(ViewBag.enderecosValidos) > 0 )
 {
     <div class="row">
         <h4 class="col-md-1">Endereço</h4>
         <select onchange="selectEndereco()" id="selectEndereco" class="form-control col-md-offset-1">
             <option value="" disabled selected style="display:none;">Selecione</option>
-            @foreach (var item in Model.Enderecos)
+            @foreach (var item in ViewBag.enderecosValidos)
             {
                 <option value="@item.Id">@item.Descricao</option>
             }
@@ -67,7 +67,7 @@
         <hr />
 
 }
-@if (Model.Enderecos == null || Model.Enderecos.Count() == 0)
+@if (ViewBag.enderecosValidos == null || Enumerable.Count(ViewBag.enderecosValidos) == 0)
 {
     <div class="row">
         @using (Html.BeginForm("AddEndereco", "User", FormMethod.Post))
@@ -79,42 +79,42 @@
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
         
-                        <input type="text" class="form-control" name="descricao" id="descricao" />
+                        <input type="text" class="form-control" name="descricao" id="descricao" required/>
            
                 </div>
 
                 <div class="form-group">
                         <label for="logradouro">Logradouro</label>
        
-                       <input type="text" class="form-control" name="logradouro" id="logradouro" />
+                       <input type="text" class="form-control" name="logradouro" id="logradouro" required/>
        
                 </div>
 
                 <div class="form-group">
                     <label for="cep">CEP</label>
        
-                        <input type="text" class="form-control" name="cep" id="cep" />
+                        <input type="text" class="form-control" name="cep" id="cep" required/>
                
                 </div>
 
                 <div class="form-group">
                     <label for="bairro">Bairro</label>
                  
-                        <input type="text" class="form-control" name="bairro" id="bairro" />
+                        <input type="text" class="form-control" name="bairro" id="bairro" required/>
                     
                 </div>
 
                 <div class="form-group">
                     <label for="numero">Numero</label>
               
-                        <input type="text" class="form-control" name="numero" id="numero" />
+                        <input type="text" class="form-control" name="numero" id="numero" required />
             
                 </div>
 
                 <div class="form-group">
                     <label for="complemento">Complemento</label>
 
-                        <input type="text" class="form-control" name="complemento" id="complemento" />
+                        <input type="text" class="form-control" name="complemento" id="complemento" required/>
                    
                 </div>
                 
@@ -131,8 +131,32 @@
 
     </div>
 }
-    
 
+@if (ViewBag.vendas != null && Enumerable.Count(ViewBag.enderecosValidos) > 0)
+{
+<h2>Histórico de Compras</h2>
+ <table class="table table-striped">
+    <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th></th>
+    </tr>
+
+        @foreach (var item in ViewBag.vendas)
+        {
+            <tr>
+                <td>@item.Data</td>
+                <td>@item.ValorTotal</td>
+                @if (item.Status == 0)
+                {
+                    <td><a href="/Carrinho/Venda/@item.Id"> <span class="glyphicon glyphicon-credit-card"></span> Realizar Pagamento</a></td>
+                }
+                
+            </tr>
+        }
+   
+</table>
+}
 
 <h2>Histórico de Pesquisas</h2>
 <table class="table table-striped">
@@ -159,6 +183,7 @@
     }
 
 </table>
+
 
 <script>
     function toggleForm() {

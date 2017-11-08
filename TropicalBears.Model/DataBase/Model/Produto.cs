@@ -100,7 +100,7 @@ namespace TropicalBears.Model.DataBase.Model
 
             Bag<Comentario>(x => x.Comentarios, m =>
             {
-                m.Cascade(Cascade.All);
+                m.Cascade(Cascade.None);
                 m.Key(k => k.Column("produto_id"));
                 m.Lazy(CollectionLazy.NoLazy);
                 m.Inverse(true);

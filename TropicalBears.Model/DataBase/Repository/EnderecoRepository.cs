@@ -33,6 +33,10 @@ namespace TropicalBears.Model.DataBase.Repository
                     + "\nErro:" + ex.Message);
             }
         }
+        public void getActives()
+        {
+            this.FindAll().Where(x => x.Status > 0);
+        }
 
     }
 }

@@ -17,7 +17,7 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual Desconto Desconto { get; set; }
         public virtual double Entrega { get; set; }
               
-        public virtual Venda Venda { get; set; }
+      //  public virtual Venda Venda { get; set; }
 
         public virtual double getValorTotal()
         {
@@ -94,12 +94,12 @@ namespace TropicalBears.Model.DataBase.Model
 
             
 
-            ManyToOne(x => x.Venda, m =>
+         /*   ManyToOne(x => x.Venda, m =>
             {
                 m.Cascade(Cascade.All);
                 m.Column("venda_id");
                 m.Class(typeof(Desconto));
-            });
+            });*/
 
 
             Property(x => x.Entrega);

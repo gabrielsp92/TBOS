@@ -18,6 +18,7 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual string Numero { get; set; }
         public virtual string Complemento { get; set; }
         public virtual User Usuario { get; set; }
+        public virtual int Status { get; set; }
     }
     public class EnderecoMap : ClassMapping<Endereco>
     {
@@ -29,14 +30,18 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Cascade(Cascade.All);
                 m.Column("user_id");
                 m.Class(typeof(User));
+                m.NotNullable(true);
             });
 
-            Property(x => x.Descricao);
-            Property(x => x.Logradouro);
-            Property(x => x.Cep);
-            Property(x => x.Bairro);
-            Property(x => x.Numero);
-            Property(x => x.Complemento);
+            Property(x => x.Status, m => {
+                m.NotNullable(true);
+            });
+            Property(x => x.Descricao,m=>m.NotNullable(true));
+            Property(x => x.Logradouro, m => m.NotNullable(true));
+            Property(x => x.Cep, m => m.NotNullable(true));
+            Property(x => x.Bairro, m => m.NotNullable(true));
+            Property(x => x.Numero, m => m.NotNullable(true));
+            Property(x => x.Complemento, m => m.NotNullable(true));
         }
     }
 }

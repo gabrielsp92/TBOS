@@ -49,7 +49,6 @@ C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\Tropi
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\System.Web.WebPages.Razor.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\TropicalBears.Model.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\WebGrease.dll
-C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\NHibernate.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\MySql.Data.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\Iesi.Collections.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\TropicalBears.Model.pdb

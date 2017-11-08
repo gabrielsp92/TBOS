@@ -26,7 +26,7 @@ namespace TropicalBears.Model.DataBase.Repository
             
             //adding venda to carrinho
             var cart = v.Carrinho;
-            cart.Venda = v;
+            //cart.Venda = v;
             DbConfig.Instance.CarrinhoRepository.Salvar(cart);
 
             //Changing Estoque
@@ -34,8 +34,9 @@ namespace TropicalBears.Model.DataBase.Repository
 
             foreach(var prod in cps)
             {
-                prod.Estoque.Quantidade -= prod.Quantidade;
                 prod.Estoque.PrecoCusto -= (prod.Estoque.CustoMedio() * prod.Quantidade);
+
+                prod.Estoque.Quantidade -= prod.Quantidade;          
                 DbConfig.Instance.EstoqueRepository.Salvar(prod.Estoque);
             }
         }
@@ -50,7 +51,7 @@ namespace TropicalBears.Model.DataBase.Repository
 
             //removing venda from carrinho
             var cart = v.Carrinho;
-            cart.Venda = null;
+            //cart.Venda = null;
             DbConfig.Instance.CarrinhoRepository.Salvar(cart);
 
             //Changing Estoque

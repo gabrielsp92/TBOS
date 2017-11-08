@@ -30,12 +30,25 @@ namespace TropicalBears.App.Controllers
                     cart.Usuario = DbConfig.Instance.UserRepository.isAuthenticated();
                     DbConfig.Instance.CarrinhoRepository.Salvar(cart);
 
-                    //sending cart to view Carrinho
+                    //sending cart to view Carrinho, and valid adresses
+                    IList<Endereco> enderecosValidos = new List<Endereco>();
+                    if (cart.Usuario.Enderecos != null)
+                    {
+                        enderecosValidos = cart.Usuario.Enderecos.Where(x => x.Status > 0).ToList();
+                    }
+                    ViewBag.enderecosValidos = enderecosValidos;
                     return View(cart);
                 }
             }
             //Not Authenticated
             return RedirectToAction("Denied", "Home");
+        }
+
+        //Details Venda, Payment.
+        public ActionResult Venda(int id)
+        {
+            Venda v = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(v);
         }
 
         //Client with new addres
@@ -57,7 +70,9 @@ namespace TropicalBears.App.Controllers
                 end.Numero = form["numero"].ToString();
                 end.Complemento = form["complemento"].ToString();
                 end.Usuario = usr;
+                end.Status = 1;
                 DbConfig.Instance.EnderecoRepository.Salvar(end);
+
 
                 //creating new Venda
                 Venda venda = new Venda();
@@ -71,8 +86,7 @@ namespace TropicalBears.App.Controllers
 
                 DbConfig.Instance.VendaRepository.CriarVenda(venda);
 
-
-                
+                return RedirectToAction("Venda", new { id = venda.Id });        
             }
             //If not Authenticated
             return RedirectToAction("Denied", "Home");
@@ -91,15 +105,26 @@ namespace TropicalBears.App.Controllers
                 var enderecoId = Convert.ToInt32(form["enderecoId"].ToString());
                 var end = DbConfig.Instance.EnderecoRepository.FindAll().Where(x => x.Id == enderecoId).FirstOrDefault();
 
-                //creating new Venda
-                Venda venda = new Venda();
-                venda.Endereco = end;
-                venda.Carrinho = cart;
-                venda.Data = DateTime.Now;
-                venda.ValorTotal = cart.getValorTotal();
-                DbConfig.Instance.VendaRepository.CriarVenda(venda);
+                //validating address
+                if (end.Status > 0)
+                {
+                    //creating new Venda
+                    Venda venda = new Venda();
+                    venda.Endereco = end;
+                    venda.Carrinho = cart;
+                    venda.Data = DateTime.Now;
+                    venda.ValorTotal = cart.getValorTotal();
+                    DbConfig.Instance.VendaRepository.CriarVenda(venda);
+                        //Clear Session's Cart
+                    HttpContext.Session["cartID"] = null;
 
-
+                    return RedirectToAction("Venda", new { id = venda.Id });
+                }
+                else
+                {
+                    ViewBag.error = "Endereço inválido";
+                    return RedirectToAction("Index");
+                }
             }
             //If not Authenticated
             return RedirectToAction("Denied", "Home");

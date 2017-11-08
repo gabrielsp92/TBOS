@@ -26,6 +26,15 @@ namespace TropicalBears.App.Controllers
             {
                 User.Enderecos = new List<Endereco>();
             }
+
+            IList<Endereco> enderecosValidos = new List<Endereco>();
+            enderecosValidos = this.User.Enderecos.Where(x => x.Status > 0).ToList();
+
+            IList<Venda> vendas = new List<Venda>();
+            vendas = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Endereco.Usuario.Id == this.User.Id).ToList();
+
+            ViewBag.vendas = vendas;
+            ViewBag.enderecosValidos = enderecosValidos;
             return View(this.User);
 
         }
@@ -43,7 +52,8 @@ namespace TropicalBears.App.Controllers
                 Bairro = form["bairro"].ToString(),
                 Numero = form["numero"].ToString(),
                 Complemento = form["complemento"].ToString(),
-                Usuario = this.User
+                Usuario = this.User,
+                Status = 1
             };
             DbConfig.Instance.EnderecoRepository.Salvar(end);
             this.User.Enderecos.Add(end);
@@ -70,7 +80,8 @@ namespace TropicalBears.App.Controllers
                 return RedirectToAction("Denied", "Home");
 
             var end = DbConfig.Instance.EnderecoRepository.FindAll().Where(x => x.Id == Convert.ToInt32(form["enderecoID"].ToString())).FirstOrDefault();
-            DbConfig.Instance.EnderecoRepository.Delete(end.Id);
+            end.Status = 0;
+            DbConfig.Instance.EnderecoRepository.Salvar(end);
             return RedirectToAction("Index");
         }
         public ActionResult SalvarEndereco(FormCollection form)

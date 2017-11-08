@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NHibernate.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace TropicalBears.App.Controllers
             
         }
 
+
+        //PRODUTO
         public ActionResult AddProduto()
         {
             if (!this.CheckAdmin())
@@ -38,7 +41,6 @@ namespace TropicalBears.App.Controllers
             ViewBag.Categorias = cats;
             return View();
         }
-
         [HttpPost]
         public ActionResult AddProduto(Produto p, FormCollection form)
         {
@@ -52,7 +54,6 @@ namespace TropicalBears.App.Controllers
 
             return RedirectToAction("Index");
         }
-
         public ActionResult EditProduto(Produto p)
         {
             if (!this.CheckAdmin())
@@ -82,7 +83,6 @@ namespace TropicalBears.App.Controllers
 
             return RedirectToAction("Index");
         }
-
         public ActionResult DetailsProduto(Produto p)
         {
             if (!this.CheckAdmin())
@@ -92,6 +92,8 @@ namespace TropicalBears.App.Controllers
 
             return View(prod);
         }
+
+            //IMAGENS DO PRODUTO
         public ActionResult ImagemProduto(Produto p)
         {
             if (!this.CheckAdmin())
@@ -106,7 +108,6 @@ namespace TropicalBears.App.Controllers
 
             return View(imgs);
         }
-
         [HttpPost]
         public ActionResult SalvarImagem(FormCollection form, HttpPostedFileBase img)
         {
@@ -135,9 +136,8 @@ namespace TropicalBears.App.Controllers
                 }
             }
 
-            return RedirectToAction("ImagemProduto",p);
+            return RedirectToAction("ImagemProduto", p);
         }
-
         public ActionResult DeleteImagem(Imagem img)
         {
             if (!this.CheckAdmin())
@@ -153,6 +153,117 @@ namespace TropicalBears.App.Controllers
             DbConfig.Instance.ImagemRepository.Delete(imagem);
             return RedirectToAction("ImagemProduto", prod);
         }
+
+        //COMENTARIOS
+        public ActionResult Comentarios()
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var coments = DbConfig.Instance.ComentarioRepository.FindAll().OrderByDescending(x => x.Data);
+            return View(coments);
+        }
+        public ActionResult DetalhesComentarios(int id)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var comentario = DbConfig.Instance.ComentarioRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(comentario);
+        }
+        public ActionResult ProcurarComentario(FormCollection form)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var search = form["nome_produto"].ToString();
+            var coments = DbConfig.Instance.ComentarioRepository.FindAll().Where(x => x.Produto.Nome.ToLower().Contains(search.ToLower())).OrderByDescending(x=>x.Data);
+            return View("Comentarios", coments);
+        }
+        public ActionResult DeletarComentario(int id)
+        {
+            var com = DbConfig.Instance.ComentarioRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            DbConfig.Instance.ComentarioRepository.Deletar(com);
+            return RedirectToAction("Comentarios");
+        }
+
+        //ESTOQUE
+            //Listagem de Compras(estoque)
+        public ActionResult Compras()
+        {
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().OrderByDescending(x => x.Quantidade);
+            return View(est);
+        }
+            //Adicionar Produto ao Estoque form
+        public ActionResult SelecionarProduto(int id)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+
+            return View("DetailsProduto", prod);
+
+        }
+            //Metodo de busca para Adicioanr Produto ao Estoque
+        public ActionResult ProcurarProduto(FormCollection form)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var search = form["nome_produto"].ToString();
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Nome.ToLower().Contains(search.ToLower()));
+            return View("ComprarProdutos", prods);
+        }
+        public ActionResult AddEstoque(FormCollection form)
+        {
+            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
+            var prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
+            ViewBag.Produto = prod;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateEstoque(FormCollection form)
+        {
+            //checking if the product is already registered in stock
+            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Id == produtoId).FirstOrDefault();
+            var qtd = Convert.ToInt32(form["quantidade"].ToString());
+            var pco = Convert.ToDouble(form["precoCusto"].ToString());
+            //if is registered
+            if (est != null)
+            {
+                est.Quantidade += qtd;
+                est.PrecoCusto += pco;
+                DbConfig.Instance.EstoqueRepository.Salvar(est);
+            }
+            else
+            {
+                est = new Estoque();
+                est.Produto = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
+                est.Quantidade = qtd;
+                est.PrecoCusto = pco;
+                DbConfig.Instance.EstoqueRepository.Salvar(est);
+
+            }
+            return RedirectToAction("Compras");
+        }
+        public ActionResult ProcurarCompra(FormCollection form)
+        {
+            if (!this.CheckAdmin())
+                return RedirectToAction("Denied", "Home");
+
+            var search = form["nome_produto"].ToString();
+            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Nome.ToLower().Contains(search.ToLower()));
+            return View("Compras", est);
+        }
+        public ActionResult ComprarProdutos()
+        {
+            var prods = DbConfig.Instance.ProdutoRepository.FindAll();
+            return View(prods);
+        }
+
+        //CATEGORIA
         public ActionResult Categoria()
         {
             List<Categoria> cats = DbConfig.Instance.CategoriaRepository.FindAll().ToList();
@@ -171,6 +282,8 @@ namespace TropicalBears.App.Controllers
             return RedirectToAction("Categoria");
         }
 
+
+        //CUPOM DE DESCONTO
         public ActionResult Desconto()
         {
             //check auth
@@ -207,12 +320,24 @@ namespace TropicalBears.App.Controllers
 
             return RedirectToAction("Index");
         }
-        public ActionResult Compras()
+
+        //VENDAS
+        public ActionResult Vendas()
         {
-            var est = DbConfig.Instance.EstoqueRepository.FindAll().OrderByDescending(x=>x.Quantidade);
-            return View(est);
+            var vendas = DbConfig.Instance.VendaRepository.FindAll().OrderBy(x => x.Data);
+            return View(vendas);
+        }
+        
+        //FLUXO DE CAIXA
+        public ActionResult FluxoDeCaixa()
+        {
+            var vendas = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Status == 1).OrderByDescending(x=>x.Data);
+
+            return View(vendas);
         }
 
+
+        //AUTH
         public Boolean CheckAdmin()
         {
             var usr = DbConfig.Instance.UserRepository.isAuthenticated();
@@ -224,57 +349,6 @@ namespace TropicalBears.App.Controllers
                 }
             }
             return false;
-        }
-        public ActionResult AddEstoque(FormCollection form)
-        {
-            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
-            var prod = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
-            ViewBag.Produto = prod;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CreateEstoque(FormCollection form)
-        {
-            //checking if the product is already registered in stock
-            var produtoId = Convert.ToInt32(form["produtoId"].ToString());
-            var est = DbConfig.Instance.EstoqueRepository.FindAll().Where(x => x.Produto.Id == produtoId).FirstOrDefault();
-            var qtd = Convert.ToInt32(form["quantidade"].ToString());
-            var pco = Convert.ToDouble(form["precoCusto"].ToString());
-            //if is registered
-            if ( est != null)
-            {
-                est.Quantidade += qtd;
-                est.PrecoCusto += pco;
-                DbConfig.Instance.EstoqueRepository.Salvar(est);
-            }
-            else
-            {
-                est = new Estoque();
-                est.Produto = DbConfig.Instance.ProdutoRepository.FindAll().Where(x => x.Id == produtoId).FirstOrDefault();
-                est.Quantidade = qtd;
-                est.PrecoCusto = pco;
-                DbConfig.Instance.EstoqueRepository.Salvar(est);
-
-            }
-            return RedirectToAction("Compras");
-        }
-
-        public ActionResult Vendas()
-        {
-            var vendas = DbConfig.Instance.VendaRepository.FindAll().OrderBy(x => x.Data);
-            return View(vendas);
-        }
-        public ActionResult ComprarProdutos()
-        {
-            var prods = DbConfig.Instance.ProdutoRepository.FindAll();
-            return View(prods);
-        }
-        public ActionResult FluxoDeCaixa()
-        {
-            var vendas = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Status == 1).OrderByDescending(x=>x.Data);
-
-            return View(vendas);
         }
     }
 }
