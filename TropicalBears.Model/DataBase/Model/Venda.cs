@@ -16,8 +16,23 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual FormaPagamento FormaPagamento { get; set; }
         public virtual Endereco Endereco { get; set; }
         public virtual int Status { get; set; }
-        public virtual DateTime Data{get;set;}
+        public virtual DateTime Data { get; set; }
 
+        public virtual IList<ItemVenda> ItemVendas { get; set; }
+
+        public virtual double GetParcelas(int vezes)
+        {
+            double parcela = 0;
+
+            parcela = (ValorTotal / vezes);
+
+            if (vezes > 3)
+            {           
+            parcela += parcela * 0.1;
+            }
+
+            return parcela;
+        }
     }
     public class VendaMap : ClassMapping<Venda>
     {
@@ -47,7 +62,16 @@ namespace TropicalBears.Model.DataBase.Model
             Property(x => x.ValorTotal);
             Property(x => x.Status);
             Property(x => x.Data);
-            
+
+            Bag<ItemVenda>(x => x.ItemVendas, m =>
+            {
+                m.Cascade(Cascade.None);
+                m.Key(k => k.Column("venda_id"));
+                m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
+            },
+            r => r.OneToMany());
+
         }
     }
 }

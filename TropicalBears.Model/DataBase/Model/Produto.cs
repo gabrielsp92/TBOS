@@ -19,8 +19,9 @@ namespace TropicalBears.Model.DataBase.Model
 
         public virtual string Nome { get; set; }
         public virtual string Descricao { get; set; }
+        public virtual int Status { get; set; }
 
-        //public virtual int Estoque { get; set; }
+        public virtual int Estoque { get; set; }
         //public virtual DateTime CreatedAt { get; set; }
         //public virtual DateTime UpdatedAt { get; set; }
 
@@ -29,6 +30,8 @@ namespace TropicalBears.Model.DataBase.Model
 
         //images
         public virtual IList<Imagem> Imagens { get; set; }
+
+       
 
 
         public virtual double MediaAvaliacao()
@@ -71,23 +74,23 @@ namespace TropicalBears.Model.DataBase.Model
                 m.Lazy(LazyRelation.NoLazy);
             });
 
-           /* ManyToOne(x => x.Subcategoria, m => {
-                m.Cascade(Cascade.All);
-                m.Column("subcategoria_id");
-                m.Class(typeof(Subcategoria));
-                m.Lazy(LazyRelation.NoLazy);
-            });
+            /* ManyToOne(x => x.Subcategoria, m => {
+                 m.Cascade(Cascade.All);
+                 m.Column("subcategoria_id");
+                 m.Class(typeof(Subcategoria));
+                 m.Lazy(LazyRelation.NoLazy);
+             });
 
-            ManyToOne(x => x.Tipo, m => {
-                m.Cascade(Cascade.All);
-                m.Column("tipo_id");
-                m.Class(typeof(Tipo));
-                m.Lazy(LazyRelation.NoLazy);
-            }); */
+             ManyToOne(x => x.Tipo, m => {
+                 m.Cascade(Cascade.All);
+                 m.Column("tipo_id");
+                 m.Class(typeof(Tipo));
+                 m.Lazy(LazyRelation.NoLazy);
+             }); */
 
-           
             Property(x => x.Nome);
             Property(x => x.Descricao);
+            Property(x => x.Status);
            
             Bag<Imagem>(x => x.Imagens, m =>
             {

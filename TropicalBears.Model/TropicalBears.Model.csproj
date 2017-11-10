@@ -42,6 +42,10 @@
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.12.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.12\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -81,6 +85,7 @@
     <Compile Include="DataBase\Model\Estoque.cs" />
     <Compile Include="DataBase\Model\FormaPagamento.cs" />
     <Compile Include="DataBase\Model\Imagem.cs" />
+    <Compile Include="DataBase\Model\ItemVenda.cs" />
     <Compile Include="DataBase\Model\Pesquisa.cs" />
     <Compile Include="DataBase\Model\Produto.cs" />
     <Compile Include="DataBase\Model\Relatorio.cs" />
@@ -96,7 +101,9 @@
     <Compile Include="DataBase\Repository\DescontoRepository.cs" />
     <Compile Include="DataBase\Repository\EnderecoRepository.cs" />
     <Compile Include="DataBase\Repository\EstoqueRepository.cs" />
+    <Compile Include="DataBase\Repository\FormaPagamentoRepository.cs" />
     <Compile Include="DataBase\Repository\ImagemRepository.cs" />
+    <Compile Include="DataBase\Repository\ItemVendaRepository.cs" />
     <Compile Include="DataBase\Repository\PesquisaRepository.cs" />
     <Compile Include="DataBase\Repository\ProdutoRepository.cs" />
     <Compile Include="DataBase\Repository\RepositoryBase.cs" />

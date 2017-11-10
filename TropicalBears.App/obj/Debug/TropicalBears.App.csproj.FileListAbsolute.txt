@@ -86,3 +86,5 @@ C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\Tropi
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\obj\Debug\TropicalBears.App.csprojResolveAssemblyReference.cache
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\obj\Debug\TropicalBears.App.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\obj\Debug\TropicalBears.App.pdb
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\itextsharp.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.App\bin\itextsharp.xml

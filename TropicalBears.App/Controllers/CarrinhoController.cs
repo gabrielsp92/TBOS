@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using TropicalBears.Model.DataBase;
 using TropicalBears.Model.DataBase.Model;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace TropicalBears.App.Controllers
 {
@@ -130,6 +132,82 @@ namespace TropicalBears.App.Controllers
             return RedirectToAction("Denied", "Home");
 
         }
+
+        //PAYMENT METHODS
+        public ActionResult Cartao(FormCollection form)
+        {
+            var vendaId = Convert.ToInt32(form["venda_id"].ToString());
+            var venda = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == vendaId).FirstOrDefault();
+
+            var NumeroCartao = form["numeroCartao"].ToString();
+            var Codigo = Convert.ToInt32(form["codigo"].ToString());
+            var Validade = form["validade_ano"].ToString() + form["validade_mes"].ToString();
+            var Valor = venda.ValorTotal;
+            var Parcelas = Convert.ToInt32(form["parcelas"].ToString());
+            var Nome = form["nomeCliente"].ToString();
+
+            var NomeEmpresa = "TBOS";
+            var CNPJEmpresa = 1111111111;
+
+            ServiceReference.tDadosCartao td = new ServiceReference.tDadosCartao();
+            td.NumeroCartao = NumeroCartao;
+            td.Parcelas = Parcelas;
+            td.Validade = Validade;
+            td.Valor = Valor;
+            td.Codigo = Codigo;
+            td.NomeEmpresa = NomeEmpresa;
+            td.CNPJEmpresa = CNPJEmpresa;
+            td.NomeCliente = Nome;
+
+            ServiceReference.CardPortTypeClient cpt = new ServiceReference.CardPortTypeClient();
+            
+
+            try
+            {
+                var result = cpt.ValidarCartao(td);
+                venda.Status = 1;
+                venda.FormaPagamento = DbConfig.Instance.FormaPagamentoRepository.FindAll().Where(x => x.Id == 1).FirstOrDefault();
+                DbConfig.Instance.VendaRepository.Salvar(venda);
+
+                return RedirectToAction("Venda", new { id = venda.Id });
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Venda", new { id = venda.Id });
+                throw;
+            }
+
+            /*
+            CustomBinding binding = new CustomBinding(
+               new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11),
+               new HttpTransportBindingElement());
+
+                myWebService client = new myWebService();
+
+                client.Endpoint.Binding = binding; 
+
+             */
+
+            /*<xsd:element name="NumeroCartao" type="xsd:string"/>
+                <xsd:element name="Codigo" type="xsd:int"/>
+                <xsd:element name="NomeCliente" type="xsd:string"/>
+                <xsd:element name="Validade" type="xsd:string"/>
+                <xsd:element name="Valor" type="xsd:double"/>
+                <xsd:element name="Parcelas" type="xsd:int"/>
+                <xsd:element name="NomeEmpresa" type="xsd:string"/>
+                <xsd:element name="CNPJEmpresa" type="xsd:int"/>*/
+
+            //return RedirectToAction("Index");
+        }
+
+     /*   public ActionResult Boleto(int id)
+        {
+            var Venda = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            
+        }
+        */
+
 
         public Boolean CheckLogIn()
         {

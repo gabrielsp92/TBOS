@@ -15,3 +15,5 @@ C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\Tropi
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\NHibernate.xml
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\obj\Debug\TropicalBears.Model.dll
 C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\obj\Debug\TropicalBears.Model.pdb
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\itextsharp.dll
+C:\Users\Gabriel\Desktop\Trabalhos Vianna 4º período\tropical bears\TBOS\TropicalBears\TropicalBears.Model\bin\Debug\itextsharp.xml

@@ -35,6 +35,8 @@ namespace TropicalBears.Model.DataBase
         public CarrinhoRepository CarrinhoRepository { get; set; }
         public CarrinhoProdutoRepository CarrinhoProdutoRepository { get; set; }
         public VendaRepository VendaRepository { get; set; }
+        public ItemVendaRepository ItemVendaRepository { get; set; }
+        public FormaPagamentoRepository FormaPagamentoRepository { get; set; }
 
         private DbConfig()
         {
@@ -49,6 +51,8 @@ namespace TropicalBears.Model.DataBase
             this.DescontoRepository = new DescontoRepository(Session);
             this.EstoqueRepository = new EstoqueRepository(Session);
             this.VendaRepository = new VendaRepository(Session);
+            this.ItemVendaRepository = new ItemVendaRepository(Session);
+            this.FormaPagamentoRepository = new FormaPagamentoRepository(Session);
 
             this.CarrinhoRepository = new CarrinhoRepository(Session);
             this.CarrinhoProdutoRepository = new CarrinhoProdutoRepository(Session);

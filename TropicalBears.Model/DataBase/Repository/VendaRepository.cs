@@ -34,8 +34,14 @@ namespace TropicalBears.Model.DataBase.Repository
 
             foreach(var prod in cps)
             {
-                prod.Estoque.PrecoCusto -= (prod.Estoque.CustoMedio() * prod.Quantidade);
+                ItemVenda iv = new ItemVenda();
+                iv.Produto = prod.Estoque.Produto;
+                iv.Quantidade = prod.Quantidade;
+                iv.Venda = v;
+                iv.Valor = prod.getValor();
+                DbConfig.Instance.ItemVendaRepository.Salvar(iv);
 
+                prod.Estoque.PrecoCusto -= (prod.Estoque.CustoMedio() * prod.Quantidade);
                 prod.Estoque.Quantidade -= prod.Quantidade;          
                 DbConfig.Instance.EstoqueRepository.Salvar(prod.Estoque);
             }

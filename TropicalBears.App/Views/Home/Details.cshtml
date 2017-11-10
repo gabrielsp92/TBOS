@@ -57,27 +57,29 @@
                 using (Html.BeginForm("SaveComment","Home",FormMethod.Post))
                 {
                     <hr />
-                    <h4>Avalie este produto:</h4>
+                    <h4>Avalie este produto:</h4><br />
                     <input type="hidden" value="@Model.Produto.Id" name="produtoID" />
-
+                    <div class="form-horizontal">
                     <div class="form-group">
                         <div class="col-md-12">
                             <select name="avaliacao" class="form-control" required>
-                                    <option value="Bom" style="color:green" data-content="<i class='glyphicon glyphicon-thumbs-up'></i>" selected>Bom</option>
-                                    <option value="Ruim" data-content="<i class='glyphicon glyphicon-thumbs-down'></i>" style="color:red" >Ruim</option>
+                                    <option value="Bom" data-content="<i class='glyphicon glyphicon-thumbs-up'></i>" selected>Bom</option>
+                                    <option value="Ruim" data-content="<i class='glyphicon glyphicon-thumbs-down'></i>">Ruim</option>
                             </select>
                         </div>
                     </div><br />
 
                     <div class="form-group">
                         <div class="col-md-12">
-                            <textarea class="form-control" name="texto" placeholder="Comentário"></textarea>
+                            <textarea class="form-control" name="texto" placeholder="Comentário" required></textarea>
                         </div>
                     </div><br />
                     <div class="form-group">
                         <div class="col-md-12">
                         <input type="submit" value="Enviar" class="btn btn-default" />
                     </div>
+                    </div>
+
                     </div>
 
                 }

@@ -151,7 +151,11 @@
                 {
                     <td><a href="/Carrinho/Venda/@item.Id"> <span class="glyphicon glyphicon-credit-card"></span> Realizar Pagamento</a></td>
                 }
-                
+                else if (item.Status == 1)
+                {
+                    <td><a href="/Carrinho/Venda/@item.Id" style="color:green"> <span class="glyphicon glyphicon-credit-card"></span> Aprovado </a></td>
+                }
+
             </tr>
         }
    
