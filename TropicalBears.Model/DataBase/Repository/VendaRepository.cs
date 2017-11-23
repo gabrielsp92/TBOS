@@ -38,7 +38,24 @@ namespace TropicalBears.Model.DataBase.Repository
                 iv.Produto = prod.Estoque.Produto;
                 iv.Quantidade = prod.Quantidade;
                 iv.Venda = v;
-                iv.Valor = prod.getValor();
+                //tipos: 1 - 10%, :: 2 - 20%, :: 3 - 20,00
+                if (v.Carrinho.Desconto == null)
+                {
+                    iv.Valor = prod.getValor();
+                }
+                else if (v.Carrinho.Desconto.Tipo == 1)
+                {
+                    iv.Valor = prod.getValor() - (prod.getValor() * 0.1);
+                }
+                else if (v.Carrinho.Desconto.Tipo == 2)
+                {
+                    iv.Valor = prod.getValor() - (prod.getValor() * 0.2);
+                }
+                else if (v.Carrinho.Desconto.Tipo == 3)
+                {
+                    iv.Valor = prod.getValor() - 20;
+                }
+
                 DbConfig.Instance.ItemVendaRepository.Salvar(iv);
 
                 prod.Estoque.PrecoCusto -= (prod.Estoque.CustoMedio() * prod.Quantidade);

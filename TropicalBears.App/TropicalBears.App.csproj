@@ -326,6 +326,9 @@
     <Content Include="Views\Admin\DetalhesComentarios.cshtml" />
     <Content Include="Views\Carrinho\Venda.cshtml" />
     <None Include="Service References\ServiceReference\Server.wsdl" />
+    <Content Include="Views\Carrinho\CartaoNegado.cshtml" />
+    <Content Include="Views\Carrinho\NotaFiscal.cshtml" />
+    <Content Include="Views\Admin\Venda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

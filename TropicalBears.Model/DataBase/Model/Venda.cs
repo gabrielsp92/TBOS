@@ -13,10 +13,13 @@ namespace TropicalBears.Model.DataBase.Model
         public virtual int Id { get; set; }
         public virtual Carrinho Carrinho { get; set; }
         public virtual Double ValorTotal { get; set; }
+        public virtual Double ValorFrete { get; set; }
         public virtual FormaPagamento FormaPagamento { get; set; }
         public virtual Endereco Endereco { get; set; }
         public virtual int Status { get; set; }
         public virtual DateTime Data { get; set; }
+        public virtual DateTime DataPagamento { get; set; }
+        public virtual int Parcelas { get; set; }
 
         public virtual IList<ItemVenda> ItemVendas { get; set; }
 
@@ -62,6 +65,9 @@ namespace TropicalBears.Model.DataBase.Model
             Property(x => x.ValorTotal);
             Property(x => x.Status);
             Property(x => x.Data);
+            Property(x => x.DataPagamento);
+            Property(x => x.ValorFrete);
+            Property(x => x.Parcelas);
 
             Bag<ItemVenda>(x => x.ItemVendas, m =>
             {

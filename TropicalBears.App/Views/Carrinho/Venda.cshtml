@@ -152,6 +152,12 @@
         </div>
     </div>
 }
+@if (Model.Status == 1)
+{   <form method="post" action="/Carrinho/NotaFiscal">
+    <input type="hidden" value="@Model.Id" name="venda_Id" />
+        <button class="btn btn-lg btn-primary" onclick=""> <span class="glyphicon glyphicon glyphicon-list-alt"></span> Gerar Nota Fiscal</button>
+    </form>
+}
 <script>
     function togglePayment() {
             document.getElementById("cartao").style.display = "block";

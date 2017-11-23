@@ -167,6 +167,8 @@ namespace TropicalBears.App.Controllers
                 var result = cpt.ValidarCartao(td);
                 venda.Status = 1;
                 venda.FormaPagamento = DbConfig.Instance.FormaPagamentoRepository.FindAll().Where(x => x.Id == 1).FirstOrDefault();
+                venda.DataPagamento = DateTime.Now;
+                venda.Parcelas = Parcelas;
                 DbConfig.Instance.VendaRepository.Salvar(venda);
 
                 return RedirectToAction("Venda", new { id = venda.Id });
@@ -174,34 +176,31 @@ namespace TropicalBears.App.Controllers
             catch (Exception)
             {
 
-                return RedirectToAction("Venda", new { id = venda.Id });
+                return RedirectToAction("CartaoNegado", new { id = venda.Id });
                 throw;
             }
 
-            /*
-            CustomBinding binding = new CustomBinding(
-               new CustomTextMessageBindingElement("iso-8859-1", "text/xml", MessageVersion.Soap11),
-               new HttpTransportBindingElement());
-
-                myWebService client = new myWebService();
-
-                client.Endpoint.Binding = binding; 
-
-             */
-
-            /*<xsd:element name="NumeroCartao" type="xsd:string"/>
-                <xsd:element name="Codigo" type="xsd:int"/>
-                <xsd:element name="NomeCliente" type="xsd:string"/>
-                <xsd:element name="Validade" type="xsd:string"/>
-                <xsd:element name="Valor" type="xsd:double"/>
-                <xsd:element name="Parcelas" type="xsd:int"/>
-                <xsd:element name="NomeEmpresa" type="xsd:string"/>
-                <xsd:element name="CNPJEmpresa" type="xsd:int"/>*/
-
-            //return RedirectToAction("Index");
         }
 
-     /*   public ActionResult Boleto(int id)
+        public ActionResult CartaoNegado(int id)
+        {
+            Venda v = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(v);
+        }
+       
+        public ActionResult NotaFiscal(FormCollection form)
+        {
+            if (!this.CheckLogIn())
+            {
+                return RedirectToAction("Denied", "Home");
+            }
+
+            var id = Convert.ToInt32(form["venda_Id"]);
+            Venda v = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+            return View(v);
+        }
+        
+        /*   public ActionResult Boleto(int id)
         {
             var Venda = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
             

@@ -327,6 +327,13 @@ namespace TropicalBears.App.Controllers
             var vendas = DbConfig.Instance.VendaRepository.FindAll().OrderBy(x => x.Data);
             return View(vendas);
         }
+
+        public ActionResult Venda(int id)
+        {
+            Venda v = DbConfig.Instance.VendaRepository.FindAll().Where(x => x.Id == id).FirstOrDefault();
+
+            return View(v);
+        }
         
         //FLUXO DE CAIXA
         public ActionResult FluxoDeCaixa()
